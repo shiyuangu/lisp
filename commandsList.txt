@@ -1,0 +1,223 @@
+Cursor Movement
+C-n	Move cursor down one line 
+C-p	Move cursor up one line 
+C-f	Move cursor forward one line 
+C-b	Move cursor back one line 
+C-a	Move cursor to beginning of line 
+C-e	Move cursor to end of line
+C-v	Move one page down 
+A-v	Move one page up 
+A-<	Move to beggining of file (Don't forget SHIFT to enter <)   
+A->	Move to end of file
+<F5>    goto-line  (customized)
+C-l     recenter-top-bottom
+C-@     set mark 
+C-x C-x mark/point interchange
+C-h l : last 100 keystrokes
+M-; comment/uncomment (mouse-selected) region
+
+Keyboard Macro
+C-x C-k b  bind the last macro to a key (C-x C-k 0-9 and C-x C-k A-Z are reserved for macro binding)
+C-x C-k C-p/C-x C-k C-n move the macro ring forward/backward
+Buffer
+C-x b shif back to the most recent buffer
+C-x k kill-buffer
+C-x C-q toggle read-only status of buffer
+
+Window 
+C-x 2 split-window-vertically
+C-x 3 split-window-horizontally
+C-x b switch to most recent buffer
+C-x ->/C-x <- (release C while pressing ->/<-
+Region
+M-w copy region 
+
+C/C++-mode
+C-c C-c comment region; C-u C-c C-c uncomment region. 
+C-M-a/C-M-e c-beginning-of-defun/c-end-of-defun
+
+vc-dir mode
+C-x v d 
+General 
+toggle-read-only Cx-Cq 
+eval-last-sexp   Cx-Ce
+describe-varibale Ch v
+repeat previous command C-x z ( to repeat it a second time immediately after,z)
+
+Keyboard Macro
+Cx-e: kmacro-end-and-call-macro 
+Cx-( or F3: start recording
+Cx-) or F3: end recording
+Cx-Ck b Bind he most recently defined keyboard macro to a key sequence, better be Cx-Ck 0-9, Cx-Ck A-Z(for those, only need to type the digit/letter when prompted)
+
+hexl-mode: a mode to edit binary file
+
+Shell Mode
+C-up/down previous/next command
+Cc-Co delete output
+Cc-Cr reposition the first output is at the top
+Cc-Cc kill the running process. 
+
+
+Dired Mode
+n/p dired-next-line/dired-previous-line
+l dired-do-redisplay
+m dired-mark
+x dired-do-flagged-delete
+t dired-toggle-marks
+v View file   (q to exit recursive editing)
+C/R dired-do-copy/rename
+# mark all auto-save-files for deletion
+! dired-do-shell-command (eg. ! tar cf foo.tar *; * runs on all files once, ? runs on each files)
+q Exit  
+s: switch between alphabetical order/data;
+
+Tags table
+M-tab 
+Auto-completion (M-tab one more if not unique)
+M-. tag <RET>
+Find first definition of tag (find-tag). 
+C-u M-.
+Find next alternate definition of last tag specified. 
+C-u - M-.
+Go back to previous tag found. 
+C-M-. pattern <RET>
+Find a tag whose name matches pattern (find-tag-regexp). 
+C-u C-M-.
+Find the next tag whose name matches the last pattern used. 
+C-x 4 . tag <RET>
+Find first definition of tag, but display it in another window (find-tag-other-window). 
+C-x 5 . tag <RET>
+Find first definition of tag, and create a new frame to select the buffer (find-tag-other-frame). 
+M-*
+Pop back to where you previously invoked M-. and friends.
+      
+M-. tag <RET>
+Find first definition of tag (find-tag). 
+C-u M-.
+Find next alternate definition of last tag specified. 
+C-u - M-.
+Go back to previous tag found. 
+C-M-. pattern <RET>
+Find a tag whose name matches pattern (find-tag-regexp). 
+C-u C-M-.
+Find the next tag whose name matches the last pattern used. 
+C-x 4 . tag <RET>
+Find first definition of tag, but display it in another window (find-tag-other-window). 
+C-x 5 . tag <RET>
+Find first definition of tag, and create a new frame to select the buffer (find-tag-other-frame). 
+M-*
+Pop back to where you previously invoked M-. and friends. 
+
+HideShow minor-mode(for folding)
+M-x hs-minor-mode
+C-c @ C-M-s show all
+C-c @ C-M-h hide all
+C-c @ C-s show block
+C-c @ C-h hide block
+C-c @ C-c toggle hide/show
+
+
+GDB
+b(break) function/line eg: b PetscError
+c-x space : set a breakpoint(the cursor need to be in source code)
+d(delete) n: delete breakpoint n.
+dis(disable) n : temporarily disable the breakpoint or watchpoint n
+n(next): next line if tge current function 
+s(step): step in 
+bt(backtrace): display the history of function calls leading up to the current line.
+info(i)[b]: list all breakpoints 
+l: list
+u(until): step out of the loop
+set args: to set the argv on the fly. This set argv and argc as if they have been set initially
+fin: step out of a function
+show args:
+
+p *array@length: print contiguous arry
+
+GDB best practice: http://www.yolinux.com/TUTORIALS/GDB-Commands.html
+.gdbinit contains command to print STL containers(pvector stl_variables; plist, pmap pset pdequeue, pstack, pqueue, ppqueue, pbitset, pstring,pwstring). 
+
+File variables: It seems that the file variables list lines should not start with spaces. 
+
+-------------------------------------------------------------
+gnu make
+Makefile help:
+:= simply expanded
+=  recursive expanded
+automatic variables:
+$@ the file name of the target
+$< the name of the first prerequisite
+$? the name of all the prerequisite that newer than the target
+
+
+Recipes Rules:
+@   suppress echoing. 
+-   ignore errors and continues. 
+
+--------------------------------------------------------------
+linux:
+bg PID/crtl-z send the process to the background
+batch-print plain tex file:
+  find . -type f -iname "*"|xargs -I {}  enscript -r -p {}.ps {}
+  This website contains typesetting, print using command line:http://dsl.org/cookbook/cookbook_19.html
+  and 
+  http://www.cups.org/documentation.php/options.html
+  GIT
+  to creat a GIT repos from an existing directory:
+   1). cd /directory
+   2). git init
+   3). git add some files
+   4). git commit -m "Initial commit" 
+  to add local git repos to bitbucket, do
+  1). Create an empty repos on bitbucket
+  2). cd /path/to/local/repos
+  3). git remote add origin ssh://git@bitbucket.org/shiyuangu/name.git
+  4). git push -u origin master
+
+  Mercurial:
+  hg log -G (hg glog) show graphical log
+  hg serve and browse http://localhost:8000
+  hg diff --stat show the summary of change between working dir to its parent
+  hg revert (the parents are not changed)
+
+  bitbucket:
+  to add local repo to bitbucket, do
+  1). create an empty repo on bitbucket, 
+  2). edit local/repo/.hg/hgrc
+      [paths]
+      default=ssh://hg@bitbucket.org/shiyuangu/thesis
+
+  3) on local machine, hg push
+  to check out a repo on bitbucket.org
+  hg clone ssh://hg@bitbucket.org/shiyuangu/argonne2012
+ 
+--------------------------------------------------------------------------
+Regular Expression
+www.regular-expressions.info/reference.html
+\b: word boundary; eg. \bm\b match the single letter "m", but not "ma" or "am" 
+
+
+---------------------------
+for tikz/pgf;
+for the coordinate, the default unit length is 1cm;
+current page node is for absolute positions. 
+
+---------------------------
+for macports(in my macbook)
+configuration files are in /opt/local/etc/macports
+local repository is in file://$HOME/MyPorts; file://scienceports
+---------------------------
+Skim:
+Inverse search : cmd+shit+<mouse click>(documented in Skim Wiki)
+Sed:
+   sed -n '1,10 p' <file
+   -n: turn off printing unless you request it. and '1,10 p' requests to p (for print) the lines 1-10. 
+cut: select fields/column
+    cut -d' ' -f2- datafile
+-d: specify delimiter
+-f2: pickup the 2nd field (-f2-:2nd field to the end of the line) 
+Convert file-coding (new line ) from DOS to UNIX.
+M-x set-buffer-file-coding-system RET undecided-unix
+or C-x RET f undecided-unix
+C-x C-f
