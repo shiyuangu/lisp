@@ -138,7 +138,11 @@ p *array@length: print contiguous arry
 GDB best practice: http://www.yolinux.com/TUTORIALS/GDB-Commands.html
 .gdbinit contains command to print STL containers(pvector stl_variables; plist, pmap pset pdequeue, pstack, pqueue, ppqueue, pbitset, pstring,pwstring). 
 
-File variables: It seems that the file variables list lines should not start with spaces. 
+File variables: It seems that the file variables list lines should not start with spaces.
+
+debug commands:
+make VERBOSE=1
+nm -Ao -C /usr/lib/libboost_mpi.a
 
 -------------------------------------------------------------
 gnu make
@@ -181,6 +185,11 @@ batch-print plain tex file:
   hg diff --stat show the summary of change between working dir to its parent
   hg revert (the parents are not changed)
 
+  using hg for petsc
+  petsc tag each release : `hg tags` shows all releases `hg up release-3.3` will update to a particular release. For patches, we need to use command for revsets:
+  
+  hg log -G -r "tag('release-3.3'):: and keyword(3.3)
+
   bitbucket:
   to add local repo to bitbucket, do
   1). create an empty repo on bitbucket, 
@@ -207,6 +216,9 @@ current page node is for absolute positions.
 for macports(in my macbook)
 configuration files are in /opt/local/etc/macports
 local repository is in file://$HOME/MyPorts; file://scienceports
+
+to clean a corrupted tarball do :
+port clean --all portname 
 ---------------------------
 Skim:
 Inverse search : cmd+shit+<mouse click>(documented in Skim Wiki)
@@ -221,3 +233,43 @@ Convert file-coding (new line ) from DOS to UNIX.
 M-x set-buffer-file-coding-system RET undecided-unix
 or C-x RET f undecided-unix
 C-x C-f
+
+Git:
+git diff:          what is unstaged. 
+git diff --staged(or git diff --cache): to see what is going to next commit.
+git diff -- file : show what version changes the the file
+git rm --cache file: Have git not track the file but keep it in disk.
+git show test:file: display the file in the branch test
+git fetch origin
+git merge origin/master
+svn:
+ svn log --stop-on-copy "^/tags/1.2.3" -v (^ was introduced in svn 1.6 to avoid type the entire /trunk  URL)
+` svn checkout ^/tags/1.2.3 new-name` will checkout the version. 
+bazaar:
+list only the name relates to a particular file bzr log filename  
+
+mplayer/mencoder
+exact jpg from image mplayer -vo jpeg:outdir=$PWD/tmp/ S.avi
+show information: ffmpeg -i S.avi
+
+encoder jpg to movie mencoder mf://*.jpg -mf fps=25:type=jpg -ovc lavc -lavcopts vcodec=mpeg4:mbd=2:trell -oac copy -o output2.avi
+
+`man mplayer` has a full list of available codec.
+mencoder also has  online documentation : http://www.mplayerhq.hu/design7/documentation.html
+
+
+gtags(GNU global):
+By default, GNU Global does not treat .h files as source files. If you are using a C++ project, this is most likely the behavior you want. To treat .h files as source files, set the environment variable GTAGSFORCECPP. Run the following command or put it in your shell. Note, the example below is meant for Bash users.
+export GTAGSFORCECPP=""
+
+Setup Cubit python script to run on Command line on Mac:
+1. python should use the system build python /bin/python(for Cubit 12-2.2 python should be /bin/python2.5 which should be specified in the script).
+2. PYTHONPATH should contains :/Applications/Cubit-dir/Cubit.app/Contents/MacOS
+3. DYLD_LIBRARY_PATH should contains: /Applications/Cubit-dir/Cubit.app/Contents/Mac
+
+GNU module
+to set up environment for a softwares: create /opt/packages/Modules/3.2.9/modulefiles/some-softwares, don't forget put #%Module1.0######## on the first line of the module file. 
+
+MacOS tricks:
+1) remove items from favorite: hold down CMD+OPT and drag it off the favoriate.
+2) Meta key problem in X: Emacs treats the `mod1` in the xmodmap as the Meta key. It looks like that by default Mode_switch(which is the command Key on Mac Key). xmodmap show the mode map. 
