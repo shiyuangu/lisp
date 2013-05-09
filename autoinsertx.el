@@ -31,4 +31,28 @@
 (require 'autoinsert)
 (eval-after-load 'autoinsert
   '(define-auto-insert "\.package" "template.package"))
+(eval-after-load 'autoinsert
+  '(define-auto-insert "\.cfgx" "template.cfgx"))
+
+;;modified the auto-insert in latex-mode to includes standard amsmath packages
+(add-to-list 'auto-insert-alist
+	     '(latex-mode
+     ;; should try to offer completing read for these
+     "options, RET: "
+     "\\documentclass[" str & ?\] | -1
+     ?{ (read-string "class: ") "}\n"
+     "\\usepackage{amsmath}\n"
+     "\\usepackage{amssymb}\n"
+     ("package, %s: "
+      "\\usepackage[" (read-string "options, RET: ") & ?\] | -1 ?{ str "}\n")
+     _ "\n\\begin{document}\n" _
+     "\n\\end{document}"))
+(add-to-list 'auto-insert-alist
+      '(gnumodules-mode
+        ;;;	
+	"Some string"
+	"#\%Module1.0\n"
+	"#setenv\n"
+	"#prepend-path\n"))
+  
 ;;; autoinsertx.el ends here
