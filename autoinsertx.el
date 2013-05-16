@@ -33,6 +33,8 @@
   '(define-auto-insert "\.package" "template.package"))
 (eval-after-load 'autoinsert
   '(define-auto-insert "\.cfgx" "template.cfgx"))
+(eval-after-load 'autoinsert
+  '(define-auto-insert "\.pbs" "template.pbs"))
 
 ;;modified the auto-insert in latex-mode to includes standard amsmath packages
 (add-to-list 'auto-insert-alist
