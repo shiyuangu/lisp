@@ -138,7 +138,8 @@ For detail, see `comment-dwim'."
 	(progn
 	  (insert-file-contents full-filename)
 	  (goto-char (point-min))
-	  (message "kernel name :%s" kernel-name)
+	  (search-forward "KernelTemplate.C" nil t)
+	  (replace-match (file-name-nondirectory buffer-file-name) t t)
 	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
 	    (replace-match kernel-name t t))
 	  )
@@ -158,9 +159,13 @@ For detail, see `comment-dwim'."
 	(progn
 	  (insert-file-contents full-filename)
 	  (goto-char (point-min))
-	  (message "kernel name :%s" kernel-name)
+	  (search-forward "KernelTemplate.h" nil t)
+	  (replace-match (file-name-nondirectory buffer-file-name) t t)
 	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
 	    (replace-match kernel-name t t))
+	  (goto-char (point-min))
+	  (while (search-forward (concat kernel-name "_H") nil t)
+	    (replace-match (concat (upcase kernel-name) "_H") t t))
 	  )
       (message "The template file %s does not exist." full-filename)))
   )
@@ -191,4 +196,59 @@ For detail, see `comment-dwim'."
   (copy-block-from-file "[Kernels]" "InputTemplate.i")
   (yank)
   )
+(defun moose-insert-kernel(kernel-name)
+  "Insert a Kernel cpp/h/block based on the current file name"
+  (interactive (let 
+		((default-kernel-name 
+		  (file-name-sans-extension
+		   (file-name-nondirectory buffer-file-name))))
+	       (list (read-string (format "Enter kernel's name(default:%s):" default-kernel-name) nil nil default-kernel-name))))
+  (let (filename-extension)
+    (setq filename-extension (file-name-extension buffer-file-name))
+    (cond ((equal filename-extension "C") (moose-insert-kernel-cpp kernel-name))
+	  ((equal filename-extension "h") (moose-insert-kernel-h kernel-name))
+	  ((equal filename-extension "i") (moose-insert-kernel-i))
+	  (t (message "filename extension is not recognized."))
+	  ))
+  )
+(defun moose-insert-mesh()
+  "Insert a [Mesh] block"
+  (interactive)
+  (copy-block-from-file "[Mesh]" "InputTemplate.i")
+  (yank)
+  )
+(defun moose-insert-variables()
+  "Insert a [Variables] block"
+  (interactive)
+  (copy-block-from-file "[Variables]" "InputTemplate.i")
+  (yank)
+  )
+(defun moose-insert-output()
+  "Insert a [Output] block"
+  (interactive)
+  (copy-block-from-file "[Output]" "InputTemplate.i")
+  (yank)
+  )
+(defun moose-insert-bcs()
+  "Insert a [BCs] block"
+  (interactive)
+  (copy-block-from-file "[BCs]" "InputTemplate.i")
+  (yank)
+  )
+(defun moose-insert-executioner()
+  "Insert a [Executioner] block"
+  (interactive)
+  (copy-block-from-file "[Executioner]" "InputTemplate.i")
+  (yank)
+  )
+(defun moose-insert-input()
+  "Insert an input file template"
+  (interactive)
+  (if
+     (file-readable-p (setq full-filename (expand-file-name
+			      "InputTemplate.i" moose-template-directory)))
+     
+       (insert-file-contents full-filename)
+   (message "Template file %s doesn't exist" full-filename))
+)
 ;;; moose.el ends here
