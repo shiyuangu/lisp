@@ -45,6 +45,7 @@
      ?{ (read-string "class: ") "}\n"
      "\\usepackage{amsmath}\n"
      "\\usepackage{amssymb}\n"
+     "\\usepackage{amsthm}\n"
      ("package, %s: "
       "\\usepackage[" (read-string "options, RET: ") & ?\] | -1 ?{ str "}\n")
      _ "\n\\begin{document}\n" _
