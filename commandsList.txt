@@ -16,6 +16,9 @@ C-x C-x mark/point interchange
 C-h l : last 100 keystrokes
 M-; comment/uncomment (mouse-selected) region
 
+Font-lock
+M-x customize-group <RET> font-lock-faces <RET> list all faces
+
 Keyboard Macro
 C-x C-k b  bind the last macro to a key (C-x C-k 0-9 and C-x C-k A-Z are reserved for macro binding)
 C-x C-k C-p/C-x C-k C-n move the macro ring forward/backward
@@ -273,3 +276,5 @@ to set up environment for a softwares: create /opt/packages/Modules/3.2.9/module
 MacOS tricks:
 1) remove items from favorite: hold down CMD+OPT and drag it off the favoriate.
 2) Meta key problem in X: Emacs treats the `mod1` in the xmodmap as the Meta key. It looks like that by default Mode_switch(which is the command Key on Mac Key). xmodmap show the mode map. 
+
+
