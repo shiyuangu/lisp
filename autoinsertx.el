@@ -57,5 +57,28 @@
 	"#\%Module1.0\n"
 	"#setenv\n"
 	"#prepend-path\n"))
+
+ ;;The following customize the c template in autoinsert.el 
+(add-to-list 'auto-insert-alist
+     '(("\\.\\([Cc]\\|cc\\|cpp\\)\\'" . "C / C++ program")
+     "Short description: "
+       "/*" \n
+       (file-name-nondirectory (buffer-file-name))
+       " -- " str \n
+       " */" > \n \n
+       "#include <iostream>" \n \n
+       "using namespace std;" \n \n
+     "#include \""
+     (let ((stem (file-name-sans-extension buffer-file-name)))
+       (cond ((file-exists-p (concat stem ".h"))
+	      (file-name-nondirectory (concat stem ".h")))
+	     ((file-exists-p (concat stem ".hh"))
+	      (file-name-nondirectory (concat stem ".hh")))))
+     & ?\" | -10
+       "main()" \n
+       "{" \n
+       > _ \n  ;;> means indent lines according major mode
+       "}" > \n))
+     
   
 ;;; autoinsertx.el ends here
