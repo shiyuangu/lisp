@@ -74,7 +74,7 @@
 	      (file-name-nondirectory (concat stem ".h")))
 	     ((file-exists-p (concat stem ".hh"))
 	      (file-name-nondirectory (concat stem ".hh")))))
-     & ?\" | -10
+     & "\"\n" | -10
        "main()" \n
        "{" \n
        > _ \n  ;;> means indent lines according major mode
