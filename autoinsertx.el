@@ -66,8 +66,7 @@
        (file-name-nondirectory (buffer-file-name))
        " -- " str \n
        " */" > \n \n
-       "#include <iostream>" \n \n
-       "using namespace std;" \n \n
+       "#include <iostream>" \n
      "#include \""
      (let ((stem (file-name-sans-extension buffer-file-name)))
        (cond ((file-exists-p (concat stem ".h"))
@@ -75,6 +74,7 @@
 	     ((file-exists-p (concat stem ".hh"))
 	      (file-name-nondirectory (concat stem ".hh")))))
      & "\"\n" | -10
+      "using namespace std;" \n \n
        "main()" \n
        "{" \n
        > _ \n  ;;> means indent lines according major mode
