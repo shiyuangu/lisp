@@ -52,7 +52,7 @@ For detail, see `comment-dwim'."
 
 ;; keywords for syntax coloring
 
-(setq moose-keywords
+(setq moose-i-keywords
       `(
 	;( ,(regexp-opt '("Mesh" "Variables"  "Kernels" "BCs" "Executioner" "Output") t) . font-lock-constant-face)
 	(,(regexp-opt '("CHANGEME")) . font-lock-warning-face)
@@ -77,7 +77,7 @@ For detail, see `comment-dwim'."
   "Major mode for editing MOOSE input file."
   :syntax-table moose-syntax-table
   
-  (setq font-lock-defaults '(moose-keywords))
+  (setq font-lock-defaults '(moose-i-keywords))
   (setq comment-start "#")
   (setq comment-end "")
   (hs-minor-mode 1)
@@ -121,16 +121,17 @@ For detail, see `comment-dwim'."
 
 (define-derived-mode moose-c++-mode c++-mode "Moose-C++"
   "Major Mode for editing moose cpp files"
+
   (define-key moose-c++-mode-map "\C-cc" 'moose-loadCh)
 )
 
-(defun moose-insert-kernel-cpp (kernel-name)
+(defun moose-insert-kernel-cpp (class-name)
   "Insert kernel cpp template"
   (interactive (let 
-		((default-kernel-name 
+		((default-class-name 
 		  (file-name-sans-extension
 		   (file-name-nondirectory buffer-file-name))))
-	       (list (read-string (format "Enter kernel's name(default:%s):" default-kernel-name) nil nil default-kernel-name))))
+	       (list (read-string (format "Enter kernel's name(default:%s):" default-class-name) nil nil default-class-name))))
   (let ((filename "KernelTemplate.C") full-filename)
     (if (file-readable-p
 	 (setq full-filename (expand-file-name
@@ -138,20 +139,18 @@ For detail, see `comment-dwim'."
 	(progn
 	  (insert-file-contents full-filename)
 	  (goto-char (point-min))
-	  (search-forward "KernelTemplate.C" nil t)
-	  (replace-match (file-name-nondirectory buffer-file-name) t t)
 	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
-	    (replace-match kernel-name t t))
+	    (replace-match class-name t t))
 	  )
       (message "The template file %s does not exist." full-filename)))
   )
-(defun moose-insert-kernel-h (kernel-name)
+(defun moose-insert-kernel-h (class-name)
   "Insert kernel header template"
   (interactive (let 
-		((default-kernel-name 
+		((default-class-name 
 		  (file-name-sans-extension
 		   (file-name-nondirectory buffer-file-name))))
-	       (list (read-string (format "Enter kernel's name(default:%s):" default-kernel-name) nil nil default-kernel-name))))
+	       (list (read-string (format "Enter kernel's name(default:%s):" default-class-name) nil nil default-class-name))))
   (let ((filename "KernelTemplate.h") full-filename)
     (if (file-readable-p
 	 (setq full-filename (expand-file-name
@@ -159,13 +158,11 @@ For detail, see `comment-dwim'."
 	(progn
 	  (insert-file-contents full-filename)
 	  (goto-char (point-min))
-	  (search-forward "KernelTemplate.h" nil t)
-	  (replace-match (file-name-nondirectory buffer-file-name) t t)
 	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
-	    (replace-match kernel-name t t))
+	    (replace-match class-name t t))
 	  (goto-char (point-min))
-	  (while (search-forward (concat kernel-name "_H") nil t)
-	    (replace-match (concat (upcase kernel-name) "_H") t t))
+	  (while (search-forward (concat class-name "_H") nil t)
+	    (replace-match (concat (upcase class-name) "_H") t t))
 	  )
       (message "The template file %s does not exist." full-filename)))
   )
@@ -196,20 +193,88 @@ For detail, see `comment-dwim'."
   (copy-block-from-file "[Kernels]" "InputTemplate.i")
   (yank)
   )
-(defun moose-insert-kernel(kernel-name)
-  "Insert a Kernel cpp/h/block based on the current file name"
+
+(defun moose-insert-postprocessor-h (class-name)
+  "Insert postprocessor header template"
   (interactive (let 
-		((default-kernel-name 
+		((default-class-name 
 		  (file-name-sans-extension
 		   (file-name-nondirectory buffer-file-name))))
-	       (list (read-string (format "Enter kernel's name(default:%s):" default-kernel-name) nil nil default-kernel-name))))
-  (let (filename-extension)
-    (setq filename-extension (file-name-extension buffer-file-name))
-    (cond ((equal filename-extension "C") (moose-insert-kernel-cpp kernel-name))
-	  ((equal filename-extension "h") (moose-insert-kernel-h kernel-name))
-	  ((equal filename-extension "i") (moose-insert-kernel-i))
-	  (t (message "filename extension is not recognized."))
-	  ))
+	       (list (read-string (format "Enter class's name(default:%s):" default-class-name) nil nil default-class-name))))
+  (let ((filename "PostprocessorTemplate.h") full-filename)
+    (if (file-readable-p
+	 (setq full-filename (expand-file-name
+			      filename moose-template-directory)))
+	(progn
+	  (insert-file-contents full-filename)
+	  (goto-char (point-min))
+	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
+	    (replace-match class-name t t))
+	  (goto-char (point-min))
+	  (while (search-forward (concat class-name "_H") nil t)
+	    (replace-match (concat (upcase class-name) "_H") t t))
+	  )
+      (message "The template file %s does not exist." full-filename)))
+  )
+(defun moose-insert-postprocessor-cpp (class-name)
+  "Insert kernel cpp template"
+  (interactive (let 
+		((default-class-name 
+		  (file-name-sans-extension
+		   (file-name-nondirectory buffer-file-name))))
+	       (list (read-string (format "Enter class name(default:%s):" default-class-name) nil nil default-class-name))))
+  (let ((filename "PostprocessorTemplate.C") full-filename)
+    (if (file-readable-p
+	 (setq full-filename (expand-file-name
+			      filename moose-template-directory)))
+	(progn
+	  (insert-file-contents full-filename)
+	  (goto-char (point-min))
+	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
+	    (replace-match class-name t t))
+	  )
+      (message "The template file %s does not exist." full-filename)))
+  )
+(defun moose-insert-material-h (class-name)
+  "Insert Material header template"
+  (interactive (let 
+		((default-class-name 
+		  (file-name-sans-extension
+		   (file-name-nondirectory buffer-file-name))))
+	       (list (read-string (format "Enter class's name(default:%s):" default-class-name) nil nil default-class-name))))
+  (let ((filename "MaterialTemplate.h") full-filename)
+    (if (file-readable-p
+	 (setq full-filename (expand-file-name
+			      filename moose-template-directory)))
+	(progn
+	  (insert-file-contents full-filename)
+	  (goto-char (point-min))
+	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
+	    (replace-match class-name t t))
+	  (goto-char (point-min))
+	  (while (search-forward (concat class-name "_H") nil t)
+	    (replace-match (concat (upcase class-name) "_H") t t))
+	  )
+      (message "The template file %s does not exist." full-filename)))
+  )
+(defun moose-insert-material-cpp (class-name)
+  "Insert Material cpp template"
+  (interactive (let 
+		((default-class-name 
+		  (file-name-sans-extension
+		   (file-name-nondirectory buffer-file-name))))
+	       (list (read-string (format "Enter class name(default:%s):" default-class-name) nil nil default-class-name))))
+  (let ((filename "MaterialTemplate.C") full-filename)
+    (if (file-readable-p
+	 (setq full-filename (expand-file-name
+			      filename moose-template-directory)))
+	(progn
+	  (insert-file-contents full-filename)
+	  (goto-char (point-min))
+	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
+	    (replace-match class-name t t))
+	  )
+      (message "The template file %s does not exist." full-filename)))
   )
 (defun moose-insert-mesh()
   "Insert a [Mesh] block"
@@ -241,6 +306,30 @@ For detail, see `comment-dwim'."
   (copy-block-from-file "[Executioner]" "InputTemplate.i")
   (yank)
   )
+(defun moose-insert-postprocessors-i()
+  "Insert a [Postprocessors] block"
+  (interactive)
+  (copy-block-from-file "[Postprocessors]" "InputTemplate.i")
+  (yank)
+  )
+(defun moose-insert-preconditioning-i()
+  "Insert a [Preconditioning] block"
+  (interactive)
+  (copy-block-from-file "[Preconditioning]" "InputTemplate.i")
+  (yank)
+  )
+(defun moose-insert-materials-i()
+  "Insert a [Materials] block"
+  (interactive)
+  (copy-block-from-file "[Materials]" "InputTemplate.i")
+  (yank)
+  )
+(defun moose-insert-ics-i()
+  "Insert a [ICs] block"
+  (interactive)
+  (copy-block-from-file "[ICs]" "InputTemplate.i")
+  (yank)
+  )
 (defun moose-insert-input()
   "Insert an input file template"
   (interactive)
@@ -251,4 +340,50 @@ For detail, see `comment-dwim'."
        (insert-file-contents full-filename)
    (message "Template file %s doesn't exist" full-filename))
 )
+
+(defun moose-insert-kernel(class-name)
+  "Insert a Kernel cpp/h/block based on the current file name"
+  (interactive (let 
+		((default-class-name 
+		  (file-name-sans-extension
+		   (file-name-nondirectory buffer-file-name))))
+	       (list (read-string (format "Enter kernel's name(default:%s):" default-class-name) nil nil default-class-name))))
+  (let (filename-extension)
+    (setq filename-extension (file-name-extension buffer-file-name))
+    (cond ((equal filename-extension "C") (moose-insert-kernel-cpp class-name))
+	  ((equal filename-extension "h") (moose-insert-kernel-h class-name))
+	  ((equal filename-extension "i") (moose-insert-kernel-i))
+	  (t (message "filename extension is not recognized."))
+	  ))
+  )
+(defun moose-insert-postprocessors(class-name)
+  "Insert a Material cpp/h/block based on the current file name"
+  (interactive (let 
+		((default-class-name 
+		  (file-name-sans-extension
+		   (file-name-nondirectory buffer-file-name))))
+	       (list (read-string (format "Enter class name(default:%s):" default-class-name) nil nil default-class-name))))
+  (let (filename-extension)
+    (setq filename-extension (file-name-extension buffer-file-name))
+    (cond ((equal filename-extension "C") (moose-insert-postprocessors-cpp class-name))
+	  ((equal filename-extension "h") (moose-insert-postprocessors-h class-name))
+	  ((equal filename-extension "i") (moose-insert-postprocessors-i))
+	  (t (message "filename extension is not recognized."))
+	  ))
+  )
+(defun moose-insert-material(class-name)
+  "Insert a Material cpp/h/block based on the current file name"
+  (interactive (let 
+		((default-class-name 
+		  (file-name-sans-extension
+		   (file-name-nondirectory buffer-file-name))))
+	       (list (read-string (format "Enter class name(default:%s):" default-class-name) nil nil default-class-name))))
+  (let (filename-extension)
+    (setq filename-extension (file-name-extension buffer-file-name))
+    (cond ((equal filename-extension "C") (moose-insert-material-cpp class-name))
+	  ((equal filename-extension "h") (moose-insert-material-h class-name))
+	  ((equal filename-extension "i") (moose-insert-materials-i))
+	  (t (message "filename extension is not recognized."))
+	  ))
+  )
 ;;; moose.el ends here
