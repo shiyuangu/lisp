@@ -54,8 +54,43 @@
       '(gnumodules-mode
         ;;;	
 	"Some string"
-	"#\%Module1.0\n"
+	"%%%"
 	"#setenv\n"
 	"#prepend-path\n"))
+(add-to-list 'auto-insert-alist
+      '(matlab-mode
+        ;;;	
+	"Short description: "
+	"% " (file-name-nondirectory (buffer-file-name)) " --- " str "\n"
+        "% Copyright (C)" (substring (current-time-string) -4) "  "
+        (getenv "ORGANIZATION") | (progn user-full-name) "\n"
+	"% author: " (user-full-name)
+	'(if (search-backward "&" (line-beginning-position) t)
+	     (replace-match (capitalize (user-login-name)) t t))
+	'(end-of-line 1) " <" (progn user-mail-address) ">\n" 
+	 "% brief:\n"))
+
+ ;;The following customize the c template in autoinsert.el 
+(add-to-list 'auto-insert-alist
+     '(("\\.\\([Cc]\\|cc\\|cpp\\)\\'" . "C / C++ program")
+     "Short description: "
+       "/*" \n
+       (file-name-nondirectory (buffer-file-name))
+       " -- " str \n
+       " */" > \n \n
+       "#include <iostream>" \n
+     "#include \""
+     (let ((stem (file-name-sans-extension buffer-file-name)))
+       (cond ((file-exists-p (concat stem ".h"))
+	      (file-name-nondirectory (concat stem ".h")))
+	     ((file-exists-p (concat stem ".hh"))
+	      (file-name-nondirectory (concat stem ".hh")))))
+     & "\"\n" | -10
+      "using namespace std;" \n \n
+       "main()" \n
+       "{" \n
+       > _ \n  ;;> means indent lines according major mode
+       "}" > \n))
+     
   
 ;;; autoinsertx.el ends here

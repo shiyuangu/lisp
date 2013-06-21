@@ -20,6 +20,9 @@ Font-lock
 M-x customize-group <RET> font-lock-faces <RET> list all faces
 
 Keyboard Macro
+C-x ( start recording macro
+C-x ) end recording macro
+C-x e execute the last macro
 C-x C-k b  bind the last macro to a key (C-x C-k 0-9 and C-x C-k A-Z are reserved for macro binding)
 C-x C-k C-p/C-x C-k C-n move the macro ring forward/backward
 Buffer
