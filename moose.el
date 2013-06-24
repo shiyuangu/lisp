@@ -386,4 +386,8 @@ For detail, see `comment-dwim'."
 	  (t (message "filename extension is not recognized."))
 	  ))
   )
+
+;;; for auto-complete ;;;;
+(when (boundp 'ac-modes)
+ (add-to-list 'ac-modes 'moose-c++-mode))
 ;;; moose.el ends here
