@@ -27,7 +27,6 @@
 
 
 (provide 'moose)
-
 (require 'hideshow)
 (defun moose-forward-sexp-func (arg)
   "move over ARG balanced blocks; This is needed by hs-minor-mode"  
@@ -276,6 +275,47 @@ For detail, see `comment-dwim'."
 	  )
       (message "The template file %s does not exist." full-filename)))
   )
+(defun moose-insert-ic-h (class-name)
+  "Insert IC header template"
+  (interactive (let 
+		((default-class-name 
+		  (file-name-sans-extension
+		   (file-name-nondirectory buffer-file-name))))
+	       (list (read-string (format "Enter class's name(default:%s):" default-class-name) nil nil default-class-name))))
+  (let ((filename "ICTemplate.h") full-filename)
+    (if (file-readable-p
+	 (setq full-filename (expand-file-name
+			      filename moose-template-directory)))
+	(progn
+	  (insert-file-contents full-filename)
+	  (goto-char (point-min))
+	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
+	    (replace-match class-name t t))
+	  (goto-char (point-min))
+	  (while (search-forward (concat class-name "_H") nil t)
+	    (replace-match (concat (upcase class-name) "_H") t t))
+	  )
+      (message "The template file %s does not exist." full-filename)))
+  )
+(defun moose-insert-ic-cpp (class-name)
+  "Insert IC cpp template"
+  (interactive (let 
+		((default-class-name 
+		  (file-name-sans-extension
+		   (file-name-nondirectory buffer-file-name))))
+	       (list (read-string (format "Enter class name(default:%s):" default-class-name) nil nil default-class-name))))
+  (let ((filename "ICTemplate.C") full-filename)
+    (if (file-readable-p
+	 (setq full-filename (expand-file-name
+			      filename moose-template-directory)))
+	(progn
+	  (insert-file-contents full-filename)
+	  (goto-char (point-min))
+	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
+	    (replace-match class-name t t))
+	  )
+      (message "The template file %s does not exist." full-filename)))
+  )
 (defun moose-insert-mesh()
   "Insert a [Mesh] block"
   (interactive)
@@ -386,8 +426,30 @@ For detail, see `comment-dwim'."
 	  (t (message "filename extension is not recognized."))
 	  ))
   )
+(defun moose-insert-ic(class-name)
+  "Insert a Material cpp/h/block based on the current file name"
+  (interactive (let 
+		((default-class-name 
+		  (file-name-sans-extension
+		   (file-name-nondirectory buffer-file-name))))
+	       (list (read-string (format "Enter class name(default:%s):" default-class-name) nil nil default-class-name))))
+  (let (filename-extension)
+    (setq filename-extension (file-name-extension buffer-file-name))
+    (cond ((equal filename-extension "C") (moose-insert-ic-cpp class-name))
+	  ((equal filename-extension "h") (moose-insert-ic-h class-name))
+	  ((equal filename-extension "i") (moose-insert-ics-i))
+	  (t (message "filename extension is not recognized."))
+	  ))
+  )
 
 ;;; for auto-complete ;;;;
 (when (boundp 'ac-modes)
  (add-to-list 'ac-modes 'moose-c++-mode))
+
+;;; the following parts impose MOOSE coding standard.
+(add-hook 'moose-c++-mode-hook (lambda()
+				 (add-hook 'local-write-file-hooks 'delete-trailing-whitespace)
+				 ))
+(add-hook 'moose-i-mode-hook (lambda()
+			       (add-hook 'local-write-file-hooks 'delete-trailing-whitespace)))
 ;;; moose.el ends here
