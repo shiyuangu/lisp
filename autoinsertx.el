@@ -48,7 +48,7 @@
      "\\usepackage{amsthm}\n"
      ("package, %s: "
       "\\usepackage[" (read-string "options, RET: ") & ?\] | -1 ?{ str "}\n")
-     _ "\n\\begin{document}\n" _
+      "\n\\begin{document}\n" _
      "\n\\end{document}"))
 (add-to-list 'auto-insert-alist
       '(gnumodules-mode
@@ -57,6 +57,7 @@
 	"%%%"
 	"#setenv\n"
 	"#prepend-path\n"))
+
 (add-to-list 'auto-insert-alist
       '(matlab-mode
         ;;;	
@@ -69,6 +70,19 @@
 	     (replace-match (capitalize (user-login-name)) t t))
 	'(end-of-line 1) " <" (progn user-mail-address) ">\n" 
 	 "% brief:\n"))
+
+(add-to-list 'auto-insert-alist
+      '(("\\.sh" . "shell script")	
+	"Short description: "
+	"#!/usr/bin/env bash"
+	"# " (file-name-nondirectory (buffer-file-name)) " --- " str "\n"
+        "# Copyright (C)" (substring (current-time-string) -4) "  "
+        (getenv "ORGANIZATION") | (progn user-full-name) "\n"
+	"# author: " (user-full-name)
+	'(if (search-backward "&" (line-beginning-position) t)
+	     (replace-match (capitalize (user-login-name)) t t))
+	'(end-of-line 1) " <" (progn user-mail-address) ">\n" 
+	 "# brief:\n"))
 
  ;;The following customize the c template in autoinsert.el 
 (add-to-list 'auto-insert-alist

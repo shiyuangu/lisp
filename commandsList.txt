@@ -216,7 +216,7 @@ www.regular-expressions.info/reference.html
 ---------------------------
 for tikz/pgf;
 for the coordinate, the default unit length is 1cm;
-current page node is for absolute positions. 
+current page node is for absolute positions (look up "absolute poisitioning in pgf manual"). 
 
 ---------------------------
 for macports(in my macbook)
