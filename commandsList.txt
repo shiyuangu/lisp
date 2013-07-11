@@ -125,6 +125,8 @@ C-c @ C-c toggle hide/show
 
 
 GDB
+file prgram-name: load a program
+source scriptname: source a gdb script. 
 b(break) function/line eg: b PetscError
 c-x space : set a breakpoint(the cursor need to be in source code)
 d(delete) n: delete breakpoint n.
@@ -138,6 +140,7 @@ u(until): step out of the loop
 set args: to set the argv on the fly. This set argv and argc as if they have been set initially
 fin: step out of a function
 show args:
+frame: show where I am. 
 
 p *array@length: print contiguous arry
 
@@ -233,6 +236,7 @@ Sed:
    -n: turn off printing unless you request it. and '1,10 p' requests to p (for print) the lines 1-10. 
 cut: select fields/column
     cut -d' ' -f2- datafile
+    or awk '{print $2}' datafile  (print 2nd column)
 -d: specify delimiter
 -f2: pickup the 2nd field (-f2-:2nd field to the end of the line) 
 Convert file-coding (new line ) from DOS to UNIX.
@@ -281,3 +285,5 @@ MacOS tricks:
 2) Meta key problem in X: Emacs treats the `mod1` in the xmodmap as the Meta key. It looks like that by default Mode_switch(which is the command Key on Mac Key). xmodmap show the mode map. 
 
 
+LaTeX:
+In MacOS, TEXHOME=~/Library/texmf. To add .cls/.sty to the texmf tree so that kpsewhich can find it: add the file to ~/Library/texmf/ and then run texhash. kpsewhich might only find the newly added file in a new terminal.

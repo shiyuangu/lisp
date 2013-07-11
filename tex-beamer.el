@@ -29,8 +29,7 @@
   (function
    (lambda()
      (TeX-add-symbols
-      '("animategraphics" TeX-arg-beamer-animategraphics)
-      '(def beamer-insert-def))
+      '("animategraphics" TeX-arg-beamer-animategraphics))
      
      (LaTeX-add-environments
       '("frame" (lambda (env &rest ignore)
@@ -166,18 +165,18 @@
 (define-skeleton beamer-insert-title-outline-frame
   "Insert title and outline frames"
   nil
-  "%Insert the following frame inside document" \n
-  "\\argonnebeamertitle %use specific setup for title"\n
-  "\\begin{frame}"\n
-  "\\titlepage"\n
-  "\\end{frame}"\n
-  "\\argonnebeameroutline %use specific setup for outline"\n
-  "\\begin{frame}"\n 
-  "\\frametitle{Outline}"\n
-  "{\\scriptsize Joint work with....}"\n
-  "\\tableofcontents"\n
-  "\\end{frame}"\n
-  "\\argonnebeamerregular %change back to regular setup"\n)
+  "%Insert the following frame inside document" > \n
+  "\\argonnebeamertitle %use specific setup for title" > \n
+  "\\begin{frame}" > \n
+  "\\titlepage"> \n
+  "\\end{frame}"> \n
+  "\\argonnebeameroutline %use specific setup for outline"> \n
+  "\\begin{frame}"> \n 
+  "\\frametitle{Outline}" > \n
+  "{\\scriptsize Joint work with....}" > \n
+  "\\tableofcontents" > \n
+  "\\end{frame}"> \n
+  "\\argonnebeamerregular %change back to regular setup" > \n)
 
 (defun TeX-arg-beamer-animategraphics (optional &optional prompt)
   "Insert animategraphics(from the package animate)"

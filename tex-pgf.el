@@ -23,10 +23,18 @@
 ;;  Handy functions for using pfg graphics package. 
 
 ;;; Code:
+(require 'tex) ; load AUCTeX
 
+(TeX-add-style-hook "latex"
+  (lambda()
+    (TeX-add-symbols
+     '("pgfdeclarelayer" TeX-arg-pgf-declarelayer))))
 
+(TeX-add-style-hook "beamer"
+  (lambda()
+    (TeX-add-symbols
+     '("pgfdeclarelayer" TeX-arg-pgf-declarelayer))))
 
-(provide 'tex-pgf)
 (define-skeleton pgf-insert-headers
       "Insert pgf/tikz libraries,ect."
       nil ; prompt string
@@ -61,8 +69,8 @@
 (define-skeleton pgf-insert-pgfonlayer
   "Insert pgfonlayer environment"
   "name(defined by \\pgfdeclarelayer{name}),RET:"
-  "\\begin{pgfonlayer}{" str "}\n" _  
-   \n "\\end{pgfonlayer}\n")
+  "\\begin{pgfonlayer}{" str "}" > \n
+  > _  \n "\\end{pgfonlayer}"  > \n )
 
 (define-skeleton pgf-insert-node
   "Insert pgf node"
@@ -105,6 +113,11 @@
   "options:"
   "\\path [" str | "fill=yellow!40,rounded corners, draw=black!50, dashed" "] ("(read-string "lower left corner: ") ") rectangle ("  (read-string "upper right corner: ") ");\n")
 
+(define-skeleton pgf-draw-cylinder
+  "Draw a cylinder"
+  "options:"
+  "\\node [" str | "cylinder,shape border rotate=90, cylinder uses custom fill,cylinder end fill=blue!40, cylinder body fill=blue!20" "] ("(read-string "name:") ") {"  (read-string "text: ") "}" "at (" (read-string "position") ");\n")
+
 (define-skeleton pgf-draw-ellipse
   "Draw an ellipse"
   "center:"
@@ -127,6 +140,17 @@
    "\\draw [help lines,step=1] (current page.south west) grid (current page.north east);" > \n
    "\\end{tikzpicture}" > \n)
 
+(defun TeX-arg-pgf-declarelayer (optional &optional prompt)
+  "Insert back/font layer"
+  (let ((back (read-input "back layer name:"))
+	(front (read-input "front layer name:")))
+    (insert "{" back "}\n")
+    (indent-according-to-mode)
+    (insert "\\pgfdeclarelayer{" front "}\n")
+    (indent-according-to-mode)
+    (insert "\\pgfsetlayers{" back "," front"}\n")
+    (indent-according-to-mode)))
+
 ;;;;optional:enable Auto-complete;;;;;
 ;;;;make sure this package is loaded after auto-complete.el
 (when (boundp 'ac-modes)
@@ -134,6 +158,7 @@
  (add-hook 'auto-complete-mode-hook (lambda() (define-key ac-mode-map (kbd "<C-tab>") 'auto-complete))) ;;; add avoid key collision with tex-mode key
  ;(add-hook 'auto-complete-mode-hook (lambda() (global-set-key (kbd "C-TAB") 'auto-complete))) ;;; add avoid key collision with tex-mode key
  )
+(provide 'tex-pgf)
 ;;; tex-pgf.el ends here
    
 
