@@ -328,6 +328,19 @@ For detail, see `comment-dwim'."
   (copy-block-from-file "[Variables]" "InputTemplate.i")
   (yank)
   )
+(defun moose-insert-aux-variables()
+  "Insert a [Variables] block"
+  (interactive)
+  (copy-block-from-file "[AuxVariables]" "InputTemplate.i")
+  (yank)
+  )
+(defun moose-insert-eigen()
+  "Insert a [Eigen] block"
+  (interactive)
+  (copy-block-from-file "[Eigen]" "InputTemplate.i")
+  (yank)
+  )
+
 (defun moose-insert-output()
   "Insert a [Output] block"
   (interactive)
@@ -427,7 +440,7 @@ For detail, see `comment-dwim'."
 	  ))
   )
 (defun moose-insert-ic(class-name)
-  "Insert a Material cpp/h/block based on the current file name"
+  "Insert a IC cpp/h/block based on the current file name"
   (interactive (let 
 		((default-class-name 
 		  (file-name-sans-extension
@@ -444,7 +457,8 @@ For detail, see `comment-dwim'."
 
 ;;; for auto-complete ;;;;
 (when (boundp 'ac-modes)
- (add-to-list 'ac-modes 'moose-c++-mode))
+ (add-to-list 'ac-modes 'moose-c++-mode)
+ (add-to-list 'ac-modes 'moose-i-mode))
 
 ;;; the following parts impose MOOSE coding standard.
 (add-hook 'moose-c++-mode-hook (lambda()
