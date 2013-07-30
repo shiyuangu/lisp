@@ -137,6 +137,7 @@ For detail, see `comment-dwim'."
 			      filename moose-template-directory)))
 	(progn
 	  (insert-file-contents full-filename)
+	  (modify-comment-block)
 	  (goto-char (point-min))
 	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
 	    (replace-match class-name t t))
@@ -156,6 +157,7 @@ For detail, see `comment-dwim'."
 			      filename moose-template-directory)))
 	(progn
 	  (insert-file-contents full-filename)
+	  (modify-comment-block)
 	  (goto-char (point-min))
 	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
 	    (replace-match class-name t t))
@@ -185,6 +187,17 @@ For detail, see `comment-dwim'."
      (message "Template file %s doesn't exist" full-filename))
       )
   )
+(defun modify-comment-block ()
+  "add the current file name/date to the doxygen comment block @file and @date"
+  (interactive)
+  (let ((current-file-name (file-name-nondirectory buffer-file-name))
+	(current-date (current-time-string) ))
+    (goto-char (point-min))
+    (search-forward "@file")
+    (insert (concat "   " current-file-name))
+    (goto-char (point-min))
+    (search-forward "@date")
+    (insert (concat"   " current-date))))
 
 (defun moose-insert-kernel-i()
   "Insert a [Kernels] block"
@@ -206,6 +219,7 @@ For detail, see `comment-dwim'."
 			      filename moose-template-directory)))
 	(progn
 	  (insert-file-contents full-filename)
+	  (modify-comment-block)
 	  (goto-char (point-min))
 	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
 	    (replace-match class-name t t))
@@ -228,6 +242,7 @@ For detail, see `comment-dwim'."
 			      filename moose-template-directory)))
 	(progn
 	  (insert-file-contents full-filename)
+	  (modify-comment-block)
 	  (goto-char (point-min))
 	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
 	    (replace-match class-name t t))
@@ -247,6 +262,7 @@ For detail, see `comment-dwim'."
 			      filename moose-template-directory)))
 	(progn
 	  (insert-file-contents full-filename)
+	  (modify-comment-block)
 	  (goto-char (point-min))
 	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
 	    (replace-match class-name t t))
@@ -269,6 +285,7 @@ For detail, see `comment-dwim'."
 			      filename moose-template-directory)))
 	(progn
 	  (insert-file-contents full-filename)
+	  (modify-comment-block)
 	  (goto-char (point-min))
 	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
 	    (replace-match class-name t t))
@@ -288,6 +305,7 @@ For detail, see `comment-dwim'."
 			      filename moose-template-directory)))
 	(progn
 	  (insert-file-contents full-filename)
+	  (modify-comment-block)
 	  (goto-char (point-min))
 	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
 	    (replace-match class-name t t))
@@ -310,6 +328,7 @@ For detail, see `comment-dwim'."
 			      filename moose-template-directory)))
 	(progn
 	  (insert-file-contents full-filename)
+	  (modify-comment-block)
 	  (goto-char (point-min))
 	  (while (re-search-forward "NAME_TO_BE_REPLACED" nil t)
 	    (replace-match class-name t t))
