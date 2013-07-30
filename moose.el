@@ -409,7 +409,7 @@ For detail, see `comment-dwim'."
 	  (t (message "filename extension is not recognized."))
 	  ))
   )
-(defun moose-insert-postprocessors(class-name)
+(defun moose-insert-postprocessor(class-name)
   "Insert a Material cpp/h/block based on the current file name"
   (interactive (let 
 		((default-class-name 
@@ -418,8 +418,8 @@ For detail, see `comment-dwim'."
 	       (list (read-string (format "Enter class name(default:%s):" default-class-name) nil nil default-class-name))))
   (let (filename-extension)
     (setq filename-extension (file-name-extension buffer-file-name))
-    (cond ((equal filename-extension "C") (moose-insert-postprocessors-cpp class-name))
-	  ((equal filename-extension "h") (moose-insert-postprocessors-h class-name))
+    (cond ((equal filename-extension "C") (moose-insert-postprocessor-cpp class-name))
+	  ((equal filename-extension "h") (moose-insert-postprocessor-h class-name))
 	  ((equal filename-extension "i") (moose-insert-postprocessors-i))
 	  (t (message "filename extension is not recognized."))
 	  ))
