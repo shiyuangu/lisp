@@ -275,7 +275,7 @@ export GTAGSFORCECPP=""
 Setup Cubit python script to run on Command line on Mac:
 1. python should use the system build python /bin/python(for Cubit 12-2.2 python should be /bin/python2.5 which should be specified in the script).
 2. PYTHONPATH should contains :/Applications/Cubit-dir/Cubit.app/Contents/MacOS
-3. DYLD_LIBRARY_PATH should contains: /Applications/Cubit-dir/Cubit.app/Contents/Mac
+3. DYLD_LIBRARY_PATH should contains: /Applications/Cubit-dir/Cubit.app/Contents/MacOS
 
 GNU module
 to set up environment for a softwares: create /opt/packages/Modules/3.2.9/modulefiles/some-softwares, don't forget put #%Module1.0######## on the first line of the module file. 
