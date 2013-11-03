@@ -102,9 +102,9 @@
 	      (file-name-nondirectory (concat stem ".hh")))))
      & "\"\n" | -10
       "using namespace std;" \n \n
-       "main()" \n
-       "{" \n
+       "int main(int argc, char* argv[]){" \n
        > _ \n  ;;> means indent lines according major mode
+       "return 0;"> \n
        "}" > \n))
      
   

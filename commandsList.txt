@@ -252,6 +252,7 @@ git rm --cache file: Have git not track the file but keep it in disk.
 git show test:file: display the file in the branch test
 git fetch origin
 git merge origin/master
+git cherry-picking/rebase doesn't use three-way merge. Instead, it uses patch-based. There will be merge-conflict for "patch-based" merge. A patch can be viewed as "from"--"to" pair. If the patch "from" part is different than the part in the file, merge-conflict occur. 
 svn:
  svn log --stop-on-copy "^/tags/1.2.3" -v (^ was introduced in svn 1.6 to avoid type the entire /trunk  URL)
 ` svn checkout ^/tags/1.2.3 new-name` will checkout the version. 
@@ -287,3 +288,13 @@ MacOS tricks:
 
 LaTeX:
 In MacOS, TEXHOME=~/Library/texmf. To add .cls/.sty to the texmf tree so that kpsewhich can find it: add the file to ~/Library/texmf/ and then run texhash. kpsewhich might only find the newly added file in a new terminal.
+
+Python:
+Masked Array:
+example:
+>>> x = ma.array([-1, 1, 0, 2, 3], mask=[0, 0, 0, 0, 1])
+>>> np.log(x)
+masked_array(data = [-- -- 0.0 0.69314718056 --],
+             mask = [ True  True False False  True],
+       fill_value = 1e+20)
+For usual array, when the input is outside the domain, Python would give error. 
