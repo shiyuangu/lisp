@@ -26,7 +26,6 @@
 
 
 
-(provide 'moose)
 (require 'hideshow)
 (defun moose-forward-sexp-func (arg)
   "move over ARG balanced blocks; This is needed by hs-minor-mode"  
@@ -86,8 +85,6 @@ For detail, see `comment-dwim'."
 ;;for hide/show moose blocks defined by tags
 ;;(add-to-list 'hs-special-modes-alist '(moose-i-mode "{" "}" "/[*/]" nil nil))
 
-
-;; define a major mode for source code development
 ;;;;;;;;;;for MOOSE programming environment;;;;;;;;;;;;;;;;;;
 ;; switch C++ source/header files assuming MOOSE directory structure
 (defun moose-loadCh ()
@@ -485,4 +482,6 @@ For detail, see `comment-dwim'."
 				 ))
 (add-hook 'moose-i-mode-hook (lambda()
 			       (add-hook 'local-write-file-hooks 'delete-trailing-whitespace)))
+
+(provide 'moose)
 ;;; moose.el ends here
