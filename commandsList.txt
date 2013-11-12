@@ -76,7 +76,7 @@ C/R dired-do-copy/rename
 # mark all auto-save-files for deletion
 ! dired-do-shell-command (eg. ! tar cf foo.tar *; * runs on all files once, ? runs on each files)
 q Exit  
-s: switch between alphabetical order/data;
+s: switch between alphabetical order/date;
 
 Tags table
 M-tab 
@@ -257,7 +257,12 @@ svn:
  svn log --stop-on-copy "^/tags/1.2.3" -v (^ was introduced in svn 1.6 to avoid type the entire /trunk  URL)
 ` svn checkout ^/tags/1.2.3 new-name` will checkout the version. 
 bazaar:
-list only the name relates to a particular file bzr log filename  
+list only the name relates to a particular file bzr log filename
+
+git log --follow -- /path/to/file(relative path from root) to show the history of files which have been deleted in HEAD.
+git rev-list -n 1 HEAD -- path/to/file show the last commit affecting a file. We can use this command to first find out the commit which delete a file and then use git checkout SHA -- path/to/file to restore the file.
+git rev-parse:  show the SHA
+git global_ignore_file: git config --global core.excludesfile ~/.gitignore_global 
 
 mplayer/mencoder
 exact jpg from image mplayer -vo jpeg:outdir=$PWD/tmp/ S.avi
