@@ -15,6 +15,7 @@ C-@     set mark
 C-x C-x mark/point interchange
 C-h l : last 100 keystrokes
 M-; comment/uncomment (mouse-selected) region
+debug-on-entry function-name : entering the debugger on a functional call
 
 Font-lock
 M-x customize-group <RET> font-lock-faces <RET> list all faces

@@ -29,6 +29,7 @@
 (provide 'autoinsertx)
 
 (require 'autoinsert)
+(setq auto-insert t) ;;; mark region as modified if t
 (eval-after-load 'autoinsert
   '(define-auto-insert "\.package" "template.package"))
 (eval-after-load 'autoinsert
@@ -106,6 +107,21 @@
        > _ \n  ;;> means indent lines according major mode
        "return 0;"> \n
        "}" > \n))
-     
+
+(add-to-list 'auto-insert-alist
+     '(("\\.\\(java\\)\\'" . "Java Skeleton")
+     "Short description: "
+       "/*" \n
+       (file-name-nondirectory (buffer-file-name))
+       " -- " str \n
+       >" */" \n 
+      ( "import package: %s: " "import " & str & ";" | -7 > \n) \n
+      "package " (read-string "define package:") & ";" | -8 > \n \n
+      > "public class Main{" \n
+      > "public static void main(String[] args){" \n
+       > _ \n  ;;> means indent lines according major mode
+       >"System.out.println(\"End\");"> \n
+       > "}" > \n
+       > "}" > \n))
   
 ;;; autoinsertx.el ends here
