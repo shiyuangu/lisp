@@ -115,9 +115,9 @@
        (file-name-nondirectory (buffer-file-name))
        " -- " str \n
        >" */" \n 
-      ( "import package: %s: " "import " & str & ";" | -7 > \n) \n
-      "package " (read-string "define package:") & ";" | -8 > \n \n
-      > "public class Main{" \n
+      ( "import package: %s: " "import " & str & ";"  & "\n" | -7)
+      "package " (read-string "define package:") & ";" & "\n" | -8
+      > "public class " (file-name-sans-extension (file-name-nondirectory (buffer-file-name)))|(or (read-string "enter class name") " NameMe" nil) " {" \n
       > "public static void main(String[] args){" \n
        > _ \n  ;;> means indent lines according major mode
        >"System.out.println(\"End\");"> \n
