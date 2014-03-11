@@ -17,22 +17,34 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;; This mode is based on json-mode and modified for the ion files used
-;; internally at Amazon. 
+;; This mode is for editing ion files used internally at Amazon.
+;; It supports (partially) Datapath 2.0 query language. 
 
 ;; 
 
 ;;; Code:
-(require 'json-mode)
+
+;;; Define some variables 
+(defconst ion-datatype
+  (regexp-opt '("null" "bool" "int" "float"
+				"decimal" "timestamp" "string" "symbol"
+				"blob" "clob" "struct" "list" "sexp") 'words) "Ion data types")
+(defconst ion-keywords
+  (regexp-opt '("define" "exist" "and" "andp"
+				"or" "quote" "now" "count" 
+				"if" "ifexist" "override"
+				"min" "max" "sum" "sort"
+				"set" "bitset" "annotation") 'words) "Ion keywords")
+
+ (defvar ion-font-lock-keywords
+   (list `(,ion-datatype . font-lock-type-face)
+		 `(,ion-keywords . font-lock-keyword-face))
+   "Font lock for ion-mode")
 
 ;;;###autoload
-(define-derived-mode ion-mode json-mode "ION"
-  "Major mode for editing ION files")
+(define-derived-mode ion-mode c++-mode "ION"
+  "Major mode for editing ION files"
+  (set (make-local-variable 'font-lock-defaults) '(ion-font-lock-keywords)))
 
-(add-hook 'ion-mode-hook
-		  (lambda()
-			(font-lock-add-keywords nil
-									'(("\\<\\(\\(?:null\\|bool\\|int\\|float\\|decimal\\|timestamp\\|string\\|symbol\\|blob\\|clob\\|struct\\|list\\|sexp\\)\\)\\>" 1 'font-lock-type-face t)
-									  ("\\<\\(define\\|override\\|exist\\|andp\\|and\\|or\\|not\\|if\\)\\>" 0 'font-lock-keyword-face t)))))
 (provide 'ion-mode)
 ;;; ion-mode.el ends here
