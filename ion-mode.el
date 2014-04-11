@@ -1,6 +1,6 @@
 ;;; ion-mode.el --- 
 
-;; Copyright (C) 2014  Shiyuan Gu
+;; Copyright (C) 2014  Shiyuan Gu (shiyuangu@gmail.com)
 
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -58,10 +58,12 @@
   (insert-tab arg))
 
 (defvar ion-dp20-src-dir (getenv "DP20_SRC_DIR")
-  "Datapath 2.0 src directory for development.")
+  "Datapath 2.0 src directory for development.
+   DP20_SRC_DIR must be absolute full path.")
 
 (defvar ion-dp20-tst-dir (getenv "DP20_TST_DIR")
-  "Datapath 2.0 direcotry for unit tests")
+  "Datapath 2.0 direcotry for unit tests.
+DP20_TST_DIR must be absolute full path.")
 
 (defvar ion-test-highlight-regexp nil
    "regexp for capturing the unit test error")
@@ -133,11 +135,47 @@
 (defun ion-find-query ()
   "Open query. Implement similar function as gtags-find-tag"
   (interactive)
-  (let (query-name-guess prompt query-name)
+  (let (query-name-guess prompt query-name full-path)
 	(setq query-name-guess (thing-at-point 'query))
 	(setq query-name (read-string "Find query: " query-name-guess))
-	(if query-name
-		(find-file-other-window (ion-query-to-path query-name)))))
+	(setq full-path (ion-query-to-path query-name))
+	(if (or (file-exists-p full-path)
+			(yes-or-no-p (format "query %s doesn't exist, create it? " full-path)))
+		(find-file-other-frame (ion-query-to-path query-name)))))
+
+(defun ion-src-tst-path(full-path)
+  "Compute src/tst file assuming the directory structure and naming convention
+   return nil if full-path is not undet ion-dp20-src-dir"
+   (if (string-match-p ion-dp20-src-dir full-path)
+	 (let (stem stem-2 stem-3)
+	   (setq stem (substring full-path (length ion-dp20-src-dir) nil))
+	   (cond  
+		((string-match "\\`/tst/" stem)
+		 (setq stem-2 (replace-match "/src/" nil nil stem))
+		 (if (string-match "Tst.ion\\'" stem-2)
+			 (setq stem-3 (replace-match ".ion" nil nil stem-2))
+		   nil))
+		((string-match "\\`/src/" stem)
+		 (setq stem-2 (replace-match "/tst/" nil nil stem))
+		 (if (string-match ".ion\\'" stem-2)
+			 (setq stem-3 (replace-match "Tst.ion" nil nil stem-2))
+		   nil))
+		(t (message (format "%s is not in ion-dp20-src-dir" full-path))))
+	   (if stem-3
+		  (concat ion-dp20-src-dir stem-3)
+		 nil))))
+
+(defun ion-load-src-tst()
+  "Open the correspondent source and unit test file."
+  (interactive)
+  (let ((target-path (ion-src-tst-path buffer-file-name)))
+	(cond
+	 ((not target-path)
+	  (message (format "Error:%s doesn't conform to the directory structure or naming convention." buffer-file-name)))
+	 ((or (file-exists-p target-path)
+			(yes-or-no-p (format "%s doesn't exist. Create it? " target-path)))
+		   (find-file-other-frame target-path))
+		  )))
 
 (defvar ion-mode-map
   (let ((ion-mode-map (make-keymap)))
@@ -146,6 +184,7 @@
 	(define-key ion-mode-map "\C-j" 'newline)
 	(define-key ion-mode-map "\M-." 'ion-find-query)
 	(define-key ion-mode-map [f9] 'ion-test)
+	(define-key ion-mode-map (kbd "C-c s") 'ion-load-src-tst)
     ion-mode-map)
   "Keymap for ion major mode")
 
