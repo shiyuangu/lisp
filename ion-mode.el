@@ -65,8 +65,31 @@
   "Datapath 2.0 direcotry for unit tests.
 DP20_TST_DIR must be absolute full path.")
 
+(defvar ion-dp20-template-dir (getenv "DP20_TMPL_DIR")
+  "Directory where templates are ")
+
 (defvar ion-test-highlight-regexp nil
    "regexp for capturing the unit test error")
+
+(defvar ion-dired-buffer nil
+  "pointed to dired buffer if not nil. Intern use only")
+
+(defvar ion-grep-find-command (concat "find " (or (and ion-dp20-src-dir (concat ion-dp20-src-dir "/src/fma")) ".") " -type  f -exec grep -nH -e {} +")
+  "default command to run grep-find")
+
+(defun ion-dired ()
+  "create or switch to the dired buffer of ion-dp20-src-dir"
+  (interactive)
+  (if (and 
+	   ion-dp20-src-dir
+	   (file-directory-p ion-dp20-src-dir))
+	  (if (null ion-dired-buffer)
+	    (progn
+		 (dired-other-window ion-dp20-src-dir)
+		 (rename-buffer "fma-src")
+		 (setq ion-dired-buffer (current-buffer)))
+		(switch-to-buffer-other-window ion-dired-buffer))
+	(message "Please set env DP20_SRC_DIR")))
 
 (defun ion-test-command()
   "ion unit test command; It assumes DP20 directory structure.
@@ -79,9 +102,23 @@ DP20_TST_DIR must be absolute full path.")
 	(setq command
 		  (format "cd %s;rsync -av %s/src/fma/ %s/src/fma;rsync -av %s/tst/fma/ %s/tst/fma/;brazil-build" ion-dp20-tst-dir ion-dp20-src-dir ion-dp20-tst-dir ion-dp20-src-dir ion-dp20-tst-dir))
 	command))
-   
+
+(defun ion-test-this-command()
+  "ion unit test for the current query.
+   This function assumes directory structure and naming convention."
+  (let (command this-query)
+	(and 
+	 (or ion-dp20-src-dir (error "Please set shell env DP20_SRC_DIR"))
+	 (or ion-dp20-tst-dir (error "Please set shell env DP20_TST_DIR")))
+	(setq this-query (file-name-nondirectory buffer-file-name))
+	(and (not (string-match "Tst.ion\\'" this-query))
+		 (string-match ".ion\\'" this-query)
+		 (setq this-query (replace-match "Tst.ion" nil nil this-query)))
+	(setq command
+		  (format "cd %s;rsync -av %s/src/fma/ %s/src/fma;rsync -av %s/tst/fma/ %s/tst/fma/; brazil-build test %s" ion-dp20-tst-dir ion-dp20-src-dir ion-dp20-tst-dir ion-dp20-src-dir ion-dp20-tst-dir this-query))))
+
 (defun ion-test()
-  "run DP20 query unit test defined by ion-test-command"
+  "Run DP20 query unit test defined by ion-test-command"
   (interactive)
   ;;;call compilation-start (instead of compile) in compile.el.
   ;;;compilation-start will not affect the compilation-directory.
@@ -89,8 +126,17 @@ DP20_TST_DIR must be absolute full path.")
   ;;; computes the buffer name based on the mode, and is a regexp
   ;;; which will use to capture the error.
   ;;; TODO: define regex
-  (if (yes-or-no-p "Run unit tests? ")
+  (if (yes-or-no-p "Run all unit tests? ")
   (compilation-start (ion-test-command) nil nil ion-test-highlight-regexp)))
+
+(defun ion-test-this()
+  "Run this query."
+  (interactive)
+  (let ((command (ion-test-this-command)) test-name)
+	(setq test-name (substring command (string-match "[^ ]+.ion\\'" command) nil))
+	(and (yes-or-no-p (format "Run unit test: %s?" test-name))
+		 (compilation-start (ion-test-this-command) nil nil ion-test-highlight-regexp))
+  ))
 
 ;;;the following functions are used by thingatpt.el for
 ;;;thing-at-point, forward-thing ect.
@@ -113,7 +159,7 @@ DP20_TST_DIR must be absolute full path.")
 
 (defun ion-query-to-path (query-name)
   "convert query of format dir1::dir2::dir3 or dir1::dir2::dir3::dir4 to path"
-  ;;FIXME: allow more n-dir structure
+  ;;TODO: allow more n-dir structure
 	(cond
 	 ((string-match "\\([[:alnum:]]+\\)::\\([[:alnum:]]+\\)::\\([[:alnum:]]+\\)::\\([[:alnum:]]+\\)" query-name)
 		(let ((dir1 (substring query-name (match-beginning 1) (match-end 1)))
@@ -143,6 +189,13 @@ DP20_TST_DIR must be absolute full path.")
 			(yes-or-no-p (format "query %s doesn't exist, create it? " full-path)))
 		(find-file-other-frame (ion-query-to-path query-name)))))
 
+(defun ion-grep-find ()
+  (interactive)
+  (let ((command-to-run (read-string "command to run:" ion-grep-find-command)))
+	;;(add-to-history 'grep-history command-to-run) ;;TODO:FIXIT.
+	(grep-find command-to-run) 
+	))
+  
 (defun ion-src-tst-path(full-path)
   "Compute src/tst file assuming the directory structure and naming convention
    return nil if full-path is not undet ion-dp20-src-dir"
@@ -177,6 +230,61 @@ DP20_TST_DIR must be absolute full path.")
 		   (find-file-other-frame target-path))
 		  )))
 
+;;;;; The following is for inserting templates
+(defun ion-insert-tst-fmaVersionConfig()
+  "Insert override fmaVersionConfig template"
+  (interactive)
+  (let ((file-name "fmaVersionConfig.ion")
+		full-path)
+	(if ion-dp20-template-dir
+		(if (string-match "/\\'" ion-dp20-template-dir)
+			(setq full-path (concat ion-dp20-template-dir file-name))
+		  (setq full-path (concat ion-dp20-template-dir "/" file-name)))
+	  (message "Error: Please set env DP20_TMPL_DIR for auto-inserting"))
+	(if full-path
+	    (if (and 
+			 (file-exists-p full-path)
+			 (yes-or-no-p (format "Insert template: %s" full-path)))
+			(insert-file-contents full-path))
+	  (message (format "Error: file %s doesn't exist" full-path)))))
+
+(defun ion-insert-tst-offers()
+  "Insert override fmaVersionConfig template"
+  (interactive)
+  (let ((file-name "offers.ion")
+		full-path)
+	(if ion-dp20-template-dir
+		(if (string-match "/\\'" ion-dp20-template-dir)
+			(setq full-path (concat ion-dp20-template-dir file-name))
+		  (setq full-path (concat ion-dp20-template-dir "/" file-name)))
+	  (message "Error: Please set env DP20_TMPL_DIR for auto-inserting"))
+	(if full-path
+	    (if (and 
+			 (file-exists-p full-path)
+			 (yes-or-no-p (format "Insert template: %s" full-path)))
+			(insert-file-contents full-path))
+	  (message (format "Error: file %s doesn't exist" full-path)))))
+
+(defun ion-insert-tst-offerFMAPrice()
+  "Insert override fmaVersionConfig template"
+  (interactive)
+  (let ((file-name "offerFMAPrice.ion")
+		full-path)
+	(if ion-dp20-template-dir
+		(if (string-match "/\\'" ion-dp20-template-dir)
+			(setq full-path (concat ion-dp20-template-dir file-name))
+		  (setq full-path (concat ion-dp20-template-dir "/" file-name)))
+	  (message "Error: Please set env DP20_TMPL_DIR for auto-inserting"))
+	(if full-path
+	    (if (and 
+			 (file-exists-p full-path)
+			 (yes-or-no-p (format "Insert template: %s" full-path)))
+			(insert-file-contents full-path))
+	  (message (format "Error: file %s doesn't exist" full-path)))))
+
+
+;;;;;end of the functions for inserting templates
+
 (defvar ion-mode-map
   (let ((ion-mode-map (make-keymap)))
     (define-key ion-mode-map "\t" 'ion-insert-tab)
@@ -184,7 +292,9 @@ DP20_TST_DIR must be absolute full path.")
 	(define-key ion-mode-map "\C-j" 'newline)
 	(define-key ion-mode-map "\M-." 'ion-find-query)
 	(define-key ion-mode-map [f9] 'ion-test)
-	(define-key ion-mode-map (kbd "C-c s") 'ion-load-src-tst)
+	(define-key ion-mode-map (kbd "C-c l") 'ion-load-src-tst)
+	(define-key ion-mode-map (kbd "C-c t") 'ion-test-this)
+	(define-key ion-mode-map (kbd "C-c d") 'ion-dired)
     ion-mode-map)
   "Keymap for ion major mode")
 
@@ -195,7 +305,8 @@ DP20_TST_DIR must be absolute full path.")
   (message "running ion-mode code....")
   (use-local-map ion-mode-map)
   (set (make-local-variable 'font-lock-defaults) '(ion-font-lock-keywords))
-  (set-syntax-table ion-mode-syntax-table))
+  (set-syntax-table ion-mode-syntax-table)
+  (column-number-mode t))
 
 (setq-default tab-width 4)
 (defun ion-setup()
