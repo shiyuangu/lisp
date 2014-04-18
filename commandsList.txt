@@ -81,6 +81,8 @@ C/R dired-do-copy/rename
 ! dired-do-shell-command (eg. ! tar cf foo.tar *; * runs on all files once, ? runs on each files)
 q Exit  
 s: switch between alphabetical order/date;
+i: insert the subdir on the current line to the current dired window
+C-u k: remove the subdir view 
 
 Tags table
 M-tab 
