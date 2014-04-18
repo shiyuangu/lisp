@@ -84,6 +84,9 @@ s: switch between alphabetical order/date;
 i: insert the subdir on the current line to the current dired window
 C-u k: remove the subdir view 
 
+Magit Mode:
+e: show diff; for unmerged file, open ediff for three merge.
+
 Tags table
 M-tab 
 Auto-completion (M-tab one more if not unique)
