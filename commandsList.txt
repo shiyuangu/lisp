@@ -284,6 +284,8 @@ encoder jpg to movie mencoder mf://*.jpg -mf fps=25:type=jpg -ovc lavc -lavcopts
 `man mplayer` has a full list of available codec.
 mencoder also has  online documentation : http://www.mplayerhq.hu/design7/documentation.html
 
+Image Magick:
+. identify image.jpeg: show image info. 
 
 gtags(GNU global):
 By default, GNU Global does not treat .h files as source files. If you are using a C++ project, this is most likely the behavior you want. To treat .h files as source files, set the environment variable GTAGSFORCECPP. Run the following command or put it in your shell. Note, the example below is meant for Bash users.
