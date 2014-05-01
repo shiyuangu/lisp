@@ -85,8 +85,11 @@ i: insert the subdir on the current line to the current dired window
 C-u k: remove the subdir view 
 
 Magit Mode:
-e: show diff; for unmerged file, open ediff for three merge.
-
+e : show diff; for unmerged file, open ediff for three merge.
+d : diff working tree to a commit
+D : diff two arbitrary commits
+. : mark/un-mark a commit; = : diff current commit and the mark commit. 
+ll: list history
 Tags table
 M-tab 
 Auto-completion (M-tab one more if not unique)
