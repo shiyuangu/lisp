@@ -31,7 +31,7 @@
   (regexp-opt '("define" "exist" "and" "andp"
 				"or" "quote" "now" "count" 
 				"if" "ifexist" "override"
-				"min" "max" "sum" "sort"
+				"min" "max" "sum" "sort" "true" "false"
 				"set" "bitset" "annotation") 'words) "Ion keywords")
 
  (defvar ion-font-lock-keywords
