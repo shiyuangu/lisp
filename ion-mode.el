@@ -28,7 +28,7 @@
 				"decimal" "timestamp" "string" "symbol"
 				"blob" "clob" "struct" "list" "sexp") 'words) "Ion data types")
 (defconst ion-keywords
-  (regexp-opt '("define" "exist" "and" "andp"
+  (regexp-opt '("define" "diverge" "exist" "and" "andp"
 				"or" "quote" "now" "count" 
 				"if" "ifexist" "override"
 				"min" "max" "sum" "sort" "true" "false"
@@ -230,7 +230,17 @@ DP20_TST_DIR must be absolute full path.")
 		   (find-file-other-frame target-path))
 		  )))
 
-;;;;; The following is for inserting templates
+;;;;; The followings are for debugging
+(defun ion-pretty-format(beg end)
+  "Replace \n with a newline. This is used for line-break for ion file."
+  (interactive (if (use-region-p)
+				   (list (region-beginning) (region-end))
+			   (list (point-min) (point-max))))
+  (if (yes-or-no-p "pretty-format?")
+	  (replace-string "\\n" "\n" nil beg end))
+)
+
+;;;;; The followings are for inserting templates
 (defun ion-insert-tst-fmaVersionConfig()
   "Insert override fmaVersionConfig template"
   (interactive)
