@@ -230,7 +230,6 @@ DP20_TST_DIR must be absolute full path.")
 		   (find-file-other-frame target-path))
 		  )))
 
-;;;;; The followings are for debugging
 (defun ion-pretty-format(beg end)
   "Replace \n with a newline. This is used for line-break for ion file."
   (interactive (if (use-region-p)
@@ -239,6 +238,13 @@ DP20_TST_DIR must be absolute full path.")
   (if (yes-or-no-p "pretty-format?")
 	  (replace-string "\\n" "\n" nil beg end))
 )
+
+(defun ion-yank-symbol-at-point ()
+  (interactive)
+  (let ((bounds (bounds-of-thing-at-point 'symbol)))
+	(if bounds
+		(kill-ring-save (car bounds) (cdr bounds))))
+ )
 
 ;;;;; The followings are for inserting templates
 (defun ion-insert-tst-fmaVersionConfig()
@@ -316,7 +322,8 @@ DP20_TST_DIR must be absolute full path.")
   (use-local-map ion-mode-map)
   (set (make-local-variable 'font-lock-defaults) '(ion-font-lock-keywords))
   (set-syntax-table ion-mode-syntax-table)
-  (column-number-mode t))
+  (column-number-mode t)
+  (global-hi-lock-mode t))
 
 (setq-default tab-width 4)
 (defun ion-setup()
