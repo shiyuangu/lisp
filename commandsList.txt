@@ -319,3 +319,22 @@ masked_array(data = [-- -- 0.0 0.69314718056 --],
              mask = [ True  True False False  True],
        fill_value = 1e+20)
 For usual array, when the input is outside the domain, Python would give error. 
+
+NoMachine Setup:
+1. Create connection using the following setup
+   Protocol: SSH
+   Host: shiyuang.desktop.amazon.com Port:22
+   Authentication: Check "Use NoMachine login."
+2. After connect to  a connection, enter the RHEL login username and passwd. 
+   New Desktop-> Create a new GNOME virtual desktop.
+3. Some tips:
+   a). Ctrl+ALT+0: bring up the menu.
+   b). Display setup: Resize remote screen + Fullscreen.
+   c). on Amazon Office's computers: double click the key "scrolllock" switch the screen of ubuntu desktop and double screen for mac.
+   
+3. Know issues and common errors:
+   a). If there are two or more connections in NoMachine pointing to the same location. Only one can be used at a time.
+   
+
+   
+
