@@ -335,6 +335,10 @@ NoMachine Setup:
 3. Know issues and common errors:
    a). If there are two or more connections in NoMachine pointing to the same location. Only one can be used at a time.
    
-
+   b). Fix the meta key issue:
+       create ~/.Xmodmap as: 
+   	   keycode 66 = Alt_L
+   	   clear Mod1
+	   add Mod1 = Alt_L Alt_R
    
 
