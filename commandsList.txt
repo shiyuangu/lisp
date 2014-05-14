@@ -335,6 +335,9 @@ NoMachine Setup:
 3. Know issues and common errors:
    a). If there are two or more connections in NoMachine pointing to the same location. Only one can be used at a time.
    
-
-   
-
+QuickSynergy setup:
+  1). On Ubuntu(server): install QuickSynergy from Ubuntu software center.
+      On Mac 10.9 Mavericks(client): install QuickSynergy from Google Code.	  
+  2). On Ubuntu: Share Tab: enter the hostname of mac in one of the directional box. The hostname of mac can be obtained by `hostname` in terminal. In amazon network, it should be <random_string>.ant.amazon.com
+      On Mac:  Use Tab: enter the ip of the Ubuntu. The ip can be obtained by `ifconfig` in a terminal.
+  ***). When the cursor doesn't move over the edge of the server, check the scroll lock key.  
