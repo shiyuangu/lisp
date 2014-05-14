@@ -241,7 +241,8 @@ configuration files are in /opt/local/etc/macports
 local repository is in file://$HOME/MyPorts; file://scienceports
 
 to clean a corrupted tarball do :
-port clean --all portname 
+port clean --all portname
+or sudo port clean all to clean any partially-completed builds. 
 ---------------------------
 Skim:
 Inverse search : cmd+shit+<mouse click>(documented in Skim Wiki)
