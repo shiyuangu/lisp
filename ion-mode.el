@@ -53,9 +53,30 @@
   "Syntax table for ion-mode")
 
 (defun ion-insert-tab (&optional arg)
-  "A wrapper for insert-tab to allow interactive call"
+  "A wrapper for insert-tab to allow interactive call.
+   The function insert-tab is defined in indent.el. In case of indent-tabs-mode is nil,
+   insert-tab eventually calls indent-to.
+   The function indent-to inserts only spaces when indent-tabs-mode is nil"
   (interactive "P")
   (insert-tab arg))
+
+(defun ion-indent-region ()
+  (interactive)
+  (if (use-region-p)
+	  (let ((start (region-beginning))
+			(end (region-end)))
+		(save-excursion
+		  (goto-char start)
+		  (while (< (point) end)
+			(insert-tab 1)
+			(forward-line 1))))))
+
+(defun ion-indent-dwim (&optional arg)
+  "indent do-what-i-mean"
+  (interactive "P")
+  (if (use-region-p)
+	  (ion-indent-region)
+	  (ion-insert-tab 1)))
 
 (defvar ion-dp20-src-dir (getenv "DP20_SRC_DIR")
   "Datapath 2.0 src directory for development.
@@ -303,7 +324,7 @@ DP20_TST_DIR must be absolute full path.")
 
 (defvar ion-mode-map
   (let ((ion-mode-map (make-keymap)))
-    (define-key ion-mode-map "\t" 'ion-insert-tab)
+    (define-key ion-mode-map "\t" 'ion-indent-dwim)
 	(define-key ion-mode-map "\C-m" 'newline-and-indent)
 	(define-key ion-mode-map "\C-j" 'newline)
 	(define-key ion-mode-map "\M-." 'ion-find-query)
