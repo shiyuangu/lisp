@@ -19,6 +19,8 @@ M-; comment/uncomment (mouse-selected) region
 debug-on-entry function-name : entering the debugger on a functional call
 C-u C-x C-e : insert the result of the evaluation into the current buffer at point. 
 
+Debugging Emacs:
+list-load-path-shadows: flag the possible shadows in the load-path. 
 
 Font-lock
 M-x customize-group <RET> font-lock-faces <RET> list all faces
