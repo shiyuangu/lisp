@@ -46,7 +46,7 @@
 			 keywords)))))
 
 (global-set-key (kbd "C-c g") 'dim:google)
-
+(global-set-key (kbd "\e\el") 'goto-line)
 
 (provide 'myhelpers)
 ;;; myhelpers.el ends here
