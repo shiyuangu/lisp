@@ -121,7 +121,7 @@ DP20_TST_DIR must be absolute full path.")
 	 (or ion-dp20-src-dir (error "Please set shell env DP20_SRC_DIR"))
 	 (or ion-dp20-tst-dir (error "Please set shell env DP20_TST_DIR")))
 	(setq command
-		  (format "cd %s;rsync -av %s/src/fma/ %s/src/fma;rsync -av %s/tst/fma/ %s/tst/fma/;brazil-build" ion-dp20-tst-dir ion-dp20-src-dir ion-dp20-tst-dir ion-dp20-src-dir ion-dp20-tst-dir))
+		  (format "cd %s;rsync -av --include '*.ion' %s/src/fma/ %s/src/fma ;rsync -av --include '*.ion' %s/tst/fma/ %s/tst/fma/;brazil-build test" ion-dp20-tst-dir ion-dp20-src-dir ion-dp20-tst-dir ion-dp20-src-dir ion-dp20-tst-dir))
 	command))
 
 (defun ion-test-this-command()
