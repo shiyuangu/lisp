@@ -1,5 +1,6 @@
 
 Cursor Movement
+Cx-= (what-cursor-position)
 C-n	Move cursor down one line 
 C-p	Move cursor up one line 
 C-f	Move cursor forward one line 
@@ -18,6 +19,10 @@ C-h l : last 100 keystrokes
 M-; comment/uncomment (mouse-selected) region
 debug-on-entry function-name : entering the debugger on a functional call
 C-u C-x C-e : insert the result of the evaluation into the current buffer at point. 
+Packaging System:
+list-package: the entry for package operations.
+d: mark for delete
+x: delete the package(need sudo to start emacs)
 
 Debugging Emacs:
 list-load-path-shadows: flag the possible shadows in the load-path. 
