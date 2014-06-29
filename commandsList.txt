@@ -249,7 +249,8 @@ local repository is in file://$HOME/MyPorts; file://scienceports
 
 to clean a corrupted tarball do :
 port clean --all portname
-or sudo port clean all to clean any partially-completed builds. 
+or sudo port clean all to clean any partially-completed builds.
+some ports needs to use `port select` after installation. The way to know is check the directory : /opt/local/etc/select/
 ---------------------------
 Skim:
 Inverse search : cmd+shit+<mouse click>(documented in Skim Wiki)
@@ -356,3 +357,8 @@ QuickSynergy setup:
       On Mac:  Use Tab: enter the ip of the Ubuntu. The ip can be obtained by `ifconfig` in a terminal.
   ***). When the cursor doesn't move over the edge of the server, check the scroll lock key.  
 
+
+ Pygments:
+ If install from macports, needs to manually create a symbolic link:
+ sudo ln -s /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/pygmentize /opt/local/bin/pygmentize
+  
