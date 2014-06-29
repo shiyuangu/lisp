@@ -22,11 +22,15 @@
 
 ;; 
 
-;;; Code:								 
+;;; Code:
+(add-to-list 'load-path "~/org-mode/lisp") ;;;CHANGEME to point to orgmode src
+(add-to-list 'load-path "~/org-mode/contrib/lisp" t) ;;add to the end of load-path
 (require 'htmlize)
 (require 'myess)
+(require 'ox-latex)
+
 ;;active Babel languages
-(package-initialize)
+;(package-initialize)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((python . t)
@@ -37,6 +41,9 @@
 ;; (setq python-shell-interpreter-args "--pylab")
 ;(setq org-babel-python-command "ipython --no-banner --classic --no-confirm-exit")e
 
+(setq org-latex-listings t)
+(add-to-list 'org-latex-packages-alist '("" "listings"))
+(add-to-list 'org-latex-packages-alist '("" "color"))
 (setq org-image-actual-width nil)
 
 (provide 'myorg)
