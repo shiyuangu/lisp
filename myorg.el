@@ -41,10 +41,20 @@
 ;; (setq python-shell-interpreter-args "--pylab")
 ;(setq org-babel-python-command "ipython --no-banner --classic --no-confirm-exit")e
 
-(setq org-latex-listings t)
-(add-to-list 'org-latex-packages-alist '("" "listings"))
-(add-to-list 'org-latex-packages-alist '("" "color"))
+;;setup for source code export in LaTex. 
+;;;;;(setq org-latex-listings t)
+;;;;;(add-to-list 'org-latex-packages-alist '("" "listings"))
+;;;;;(add-to-list 'org-latex-packages-alist '("" "color"))
+
+;;Alternatively, We can use minted. However, this setup might cause problem for org-preview-latex. Consult (C-h v org-latex-listings) for details.
+(setq org-latex-listings 'minted)
+(add-to-list 'org-latex-packages-alist '("" "minted"))
+(setq org-latex-pdf-process
+	  '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f" "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"  "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+
 (setq org-image-actual-width nil)
+
+
 
 (provide 'myorg)
 ;;; myorg.el ends here
