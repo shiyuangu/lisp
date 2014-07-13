@@ -145,7 +145,8 @@ C-c @ C-h hide block
 C-c @ C-c toggle hide/show
 
 Hacking Emacs: 
-M-x locate-library: find the file provide the library 
+M-x locate-library: find the file provide the library
+M-x trace-function func: show the records of the call to func with its parameters.  
 
 GDB
 file prgram-name: load a program
