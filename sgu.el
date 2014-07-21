@@ -1,4 +1,4 @@
-;;; myhelpers.el --- some helper functions and global keymap for myself. 
+;;; sgu.el --- some helper functions and global keymap for myself. 
 
 ;; Copyright (C) 2013  S. Gu
 
@@ -54,5 +54,5 @@
   (setq line-move-visual (not line-move-visual))
 )
 
-(provide 'myhelpers)
-;;; myhelpers.el ends here
+(provide 'sgu)
+;;; sgu.el ends here
