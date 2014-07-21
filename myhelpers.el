@@ -1,4 +1,4 @@
-;;; myhelpers.el --- some helper functions
+;;; myhelpers.el --- some helper functions and global keymap for myself. 
 
 ;; Copyright (C) 2013  S. Gu
 
@@ -47,6 +47,12 @@
 
 (global-set-key (kbd "C-c g") 'dim:google)
 (global-set-key (kbd "\e\el") 'goto-line)
+
+(defun sgu-toggle-visual-line ()
+  (interactive)
+  "Toggle line-move-visual"
+  (setq line-move-visual (not line-move-visual))
+)
 
 (provide 'myhelpers)
 ;;; myhelpers.el ends here
