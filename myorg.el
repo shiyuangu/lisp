@@ -35,7 +35,6 @@
  'org-babel-load-languages
  '((python . t)
    (emacs-lisp . t)
-   (latex . t)
    (R . t)))
 ;(setq python-shell-interpreter "ipython")
 ;; (setq python-shell-interpreter-args "--pylab")
@@ -54,7 +53,8 @@
 
 (setq org-image-actual-width nil)
 
-
+;;add more templates:
+(add-to-list 'org-structure-template-alist '("T" "#+TITILE: "))
 
 (provide 'myorg)
 ;;; myorg.el ends here
