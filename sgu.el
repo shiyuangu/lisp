@@ -1,8 +1,8 @@
-;;; sgu.el --- some helper functions and global keymap for myself. 
+;;; sgu.el --- some convenient functions and global keymaps. 
 
 ;; Copyright (C) 2013  S. Gu
 
-;; Author: S. Gu <sgu@anl.gov>
+;; Author: S. Gu <shiyuangu@gmail.com>
 ;; Keywords: 
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -50,7 +50,7 @@
 
 (defun sgu-toggle-visual-line ()
   (interactive)
-  "Toggle line-move-visual"
+  "Toggle line-move-visual. When line-move-visual is non-nil, next-line(C-n) will move to next logical line instead of next visual line."
   (setq line-move-visual (not line-move-visual))
 )
 
