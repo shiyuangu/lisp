@@ -1,6 +1,7 @@
 
 Cursor Movement
 Cx-= (what-cursor-position)
+Mx-goto-char
 Cx-+ make all window the same width/height.
 C-n	Move cursor down one line 
 C-p	Move cursor up one line 
