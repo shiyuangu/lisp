@@ -1,8 +1,8 @@
 ;;; myorg.el --- My customization of org-mode
 
-;; Copyright (C) 2014  Gu
+;; Copyright (C) 2014  S. Gu
 
-;; Author: Gu <shiyuang@685b35881646.ant.amazon.com>
+;; Author: S. Gu <shiyuangu@gmail.com>
 ;; Keywords: 
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -28,7 +28,8 @@
 (require 'htmlize)
 (require 'myess)
 (require 'ox-latex)
-
+(require 'ox-html)
+(require 'sgu-ox-html-english)
 ;;active Babel languages
 ;(package-initialize)
 (org-babel-do-load-languages
@@ -55,6 +56,8 @@
 
 ;;add more templates:
 (add-to-list 'org-structure-template-alist '("T" "#+TITILE: "))
+(add-to-list 'org-structure-template-alist '("C" "#+CATEGORY: "))
+
 
 (provide 'myorg)
 ;;; myorg.el ends here
