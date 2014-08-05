@@ -29,6 +29,7 @@
 (require 'ox-wp) ;;this line is needed since we need to override a function later
 (require 'sgu-ox-html-english)
 
+(setq org2blog/wp-use-sourcecode-shortcode t)
 (setq org2blog/wp-blog-alist
       '(("wordpress"
          :url "http://shiyuangu.wordpress.com/xmlrpc.php"
@@ -46,11 +47,19 @@
 
 (defun sgu-format-function (format-string)
    (format format-string
-           org2blog/wp-default-title
-           (format-time-string "%d-%m-%Y" (current-time))
+           "ADDME"
+           ""
 		   ""))
 
-(setq org2blog/wp-buffer-format-function 'sgu-format-function)
+;;Enable wordpress's sourcecode shortcode blocks; Use 'wp backend to use
+(setq org2blog/wp-buffer-format-function 'sgu-format-function) 
+
+;;a convenient function for inserting the blog template
+(defun sgu-wp-insert-template()
+  "A convenient function to insert the blog template"
+  (interactive)
+  (insert (funcall org2blog/wp-buffer-format-function org2blog/wp-buffer-template)))
+
 
 ;; Redefine org-wp-export-as-wordpress in ox-wp.el
 ;;; Define Back-End
@@ -86,11 +95,13 @@ be displayed when `org-export-show-temporary-export-buffer' is
 non-nil."
   (interactive)
   (let (choice)
-	(setq choice (string-to-int (read-string " 1-wp; 2-wp-english; Please choose:")))
+	(setq choice (string-to-int (read-string " 1-wp-html; 2-wp-english;3-html Please choose:")))
 	(cond
 	 ((= choice 1) (org-export-to-buffer 'wp "*Org WP Export*"
     async subtreep nil t ext-plist (lambda () (html-mode))))
 	 ((= choice 2) (org-export-to-buffer 'sgu-wp-english "*Org WP Export*"
+    async subtreep nil t ext-plist (lambda () (html-mode))))
+	 ((= choice 3) (org-export-to-buffer 'html "*Org WP Export*"
     async subtreep nil t ext-plist (lambda () (html-mode))))
 	 (t (error "Unknow chose %d" choice)))))
 
