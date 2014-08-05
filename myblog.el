@@ -47,7 +47,7 @@
 (defun sgu-format-function (format-string)
    (format format-string
            org2blog/wp-default-title
-           (format-time-string "%m-%d-%Y" (current-time))
+           (format-time-string "%d-%m-%Y" (current-time))
 		   ""))
 
 (setq org2blog/wp-buffer-format-function 'sgu-format-function)
