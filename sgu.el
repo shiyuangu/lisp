@@ -44,9 +44,22 @@
 			 "[[:space:]]+"
 			 "+"
 			 keywords)))))
+(defun sgu-wikilize-link (beg end)
+  "Url-encode wiki special characters [] {}"
+  (interactive (if (use-region-p)
+			       (list (region-beginning) (region-end))
+				   (list nil nil)))
+  (if (and beg end)
+	  (progn
+		(replace-string "{" "%7B" nil beg end)
+		(replace-string "}" "%7D" nil beg end)
+		(replace-string "[" "%5B" nil beg end)
+		(replace-string "]" "%5D" nil beg end))
+	  (message "Please define a region")))
 
 (global-set-key (kbd "C-c g") 'dim:google)
 (global-set-key (kbd "\e\el") 'goto-line)
+(global-set-key (kbd "\e\ew") 'sgu-wikilize-link)
 
 (defun sgu-toggle-visual-line ()
   (interactive)
