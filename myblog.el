@@ -1,4 +1,4 @@
-;;; myxml.el --- setup blog
+;;; myblog.el --- setup blog
 
 ;; Copyright (C) 2014  Gu
 
