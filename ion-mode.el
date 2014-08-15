@@ -54,9 +54,9 @@
 
 (defun ion-insert-tab (&optional arg)
   "A wrapper for insert-tab to allow interactive call.
-   The function insert-tab is defined in indent.el. In case of indent-tabs-mode is nil,
-   insert-tab eventually calls indent-to.
-   The function indent-to inserts only spaces when indent-tabs-mode is nil"
+   The function insert-tab is defined in indent.el. In case of indent-tabs-mode is nil, insert-tab eventually calls indent-to.
+   The function indent-to inserts only spaces when indent-tabs-mode is nil.
+   If indent-tabs-mode is non-nil, insert-tab just insert arg tabs"
   (interactive "P")
   (insert-tab arg))
 
@@ -349,7 +349,8 @@ DP20_TST_DIR must be absolute full path.")
 (setq-default tab-width 4)
 (defun ion-setup()
   ;(setq c-basic-offset 4)
-  (setq indent-tabs-mode nil) ;;inserting tab is not allowed
+  ;(setq indent-tabs-mode nil) ;;inserting tab is not allowed
+  (setq indent-tabs-mode t) ;;inserting tab is allowed
   (setq compilation-scroll-output t);; automatically scroll when compiling
 )
 (add-hook 'ion-mode-hook 'ion-setup)
