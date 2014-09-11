@@ -36,10 +36,13 @@
  'org-babel-load-languages
  '((python . t)
    (emacs-lisp . t)
-   (R . t)))
-;(setq python-shell-interpreter "ipython")
-;; (setq python-shell-interpreter-args "--pylab")
-;(setq org-babel-python-command "ipython --no-banner --classic --no-confirm-exit")e
+   (R . t)
+   (sh . t)))
+
+(setq python-shell-interpreter "ipython"
+      ;;python-shell-interpreter-args "--pylab"
+      )
+(setq org-babel-python-command "ipython --no-banner --classic --no-confirm-exit")
 
 ;;setup for source code export in LaTex. 
 ;;;;;(setq org-latex-listings t)
@@ -57,6 +60,23 @@
 ;;add more templates:
 (add-to-list 'org-structure-template-alist '("T" "#+TITILE: "))
 (add-to-list 'org-structure-template-alist '("C" "#+CATEGORY: "))
+
+;;set up capture
+(setq org-default-notes-file (concat org-directory "/notes.org"))
+(define-key global-map (kbd "\e\ec") 'org-capture)
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline "~/org/taskdiary.org" "Tasks")
+             "* TODO %?\n  %i\n  %a")
+        ("j" "Journal" entry (file+datetree "~/org/journal.org")
+             "* %?\nEntered on %U\n  %i\n  %a")
+		("a" "Appointment" entry (file+headline "~/org/taskdiary.org" "Calendar") "* APPT %^{Description} %^g \n%? \nAdded: %U") 
+		))
+
+;;set up MobileOrg
+;; Set to <your Dropbox root directory>/MobileOrg.
+(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+;; Set to the name of the file where new notes will be stored
+(setq org-mobile-inbox-for-pull "~/org/flagged.org")
 
 
 (provide 'myorg)

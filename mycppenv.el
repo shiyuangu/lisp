@@ -72,6 +72,32 @@
   "\t$(CPP) $(CPPFLAGS) -g -c -o $@ $<"\n
    str | "all" ":$(OBJ)"\n
   "\t$(CPP) -o " str | "test" " $(OBJ)"\n)
-  
+
+;;;;;;;;;;for gtags;;;;;;;;;;;;;;;;;
+(require 'gtags)
+(define-key gtags-mode-map "\C-cf" 'gtags-find-file)
+(define-key gtags-mode-map  "\M-." 'gtags-find-tag)
+(define-key gtags-mode-map (kbd "C-c r") 'gtags-find-rtag)
+(define-key gtags-mode-map (kbd "C-c p") 'gtags-pop-stack)
+(define-key gtags-select-mode-map (kbd "C-m") 'gtags-select-tag)
+(add-hook 'c-mode-common-hook '(lambda () (gtags-mode t)))
+
+;;;;;;;;;;;;;;;;for doxymacs;;;;;;;;;;;;;;
+(require 'doxymacs)
+(add-hook 'c-mode-common-hook 'doxymacs-mode)
+;; (defun my-doxymacs-font-lock-hook ()
+;;       (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
+;; 	  (doxymacs-font-lock)))
+;(add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
+;(add-hook 'font-lock-mode-hook 'doxymacs-font-lock)
+
+;;;;;;;;;;;;;;;;;for MOOSE ;;;;;;;;;;;;;;;;;
+;;;;;;;moose.el should be load after auto-complete.el is loaded;;;;;
+(require 'moose)
+(setq moose-template-directory "~/moose_templates")
+
+;;;;;for mpi;;;;;
+(require 'mpi)
+
 (provide 'mycppenv)
 ;;; mycpp-env.el ends here

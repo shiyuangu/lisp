@@ -1,4 +1,4 @@
-;;; sgu.el --- some convenient functions and global keymaps. 
+;;; sgu.el --- some convenient functions, global keymaps, and helper function which might be used in other packages. 
 
 ;; Copyright (C) 2013  S. Gu
 
@@ -66,6 +66,11 @@
   "Toggle line-move-visual. When line-move-visual is non-nil, next-line(C-n) will move to next logical line instead of next visual line."
   (setq line-move-visual (not line-move-visual))
 )
+
+;;;;;;;;;swap C-j and C-m; by Gu;;;;;;;;;;;;;;;;;;;;
+(defun swap-cj-cm ()
+  (local-set-key (kbd "C-m") 'newline-and-indent)
+  (local-set-key (kbd "C-j") 'newline))
 
 (provide 'sgu)
 ;;; sgu.el ends here
