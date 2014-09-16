@@ -58,7 +58,7 @@
 (setq org-image-actual-width nil)
 
 ;;add more templates:
-(add-to-list 'org-structure-template-alist '("T" "#+TITILE: "))
+(add-to-list 'org-structure-template-alist '("T" "#+TITLE: "))
 (add-to-list 'org-structure-template-alist '("C" "#+CATEGORY: "))
 
 ;;set up capture
