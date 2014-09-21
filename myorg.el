@@ -39,9 +39,9 @@
    (R . t)
    (sh . t)))
 
-(setq python-shell-interpreter "ipython"
-      ;;python-shell-interpreter-args "--pylab"
-      )
+;; (setq python-shell-interpreter "ipython"
+;;       ;;python-shell-interpreter-args "--pylab"
+;;       );;; should set in mypython.el
 (setq org-babel-python-command "ipython --no-banner --classic --no-confirm-exit")
 
 ;;setup for source code export in LaTex. 
