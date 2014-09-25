@@ -24,7 +24,14 @@
 
 ;;; Code:
 
-(require 'ess-site)
+;(require 'ess-site)
+
+(autoload 'R-mode "ess-site.el" "ESS" t)
+(add-to-list 'auto-mode-alist '("\\.R$" . R-mode))
+;(setq inferior-R-program-name "/path/to/R") ;;R program name; default to "R"
+;(setq ess-eval-visibly-p nil)
+;(setq ess-ask-for-ess-directory nil)
+(require 'ess-eldoc)
 
 (provide 'myess)
 ;;; myess.el ends here

@@ -45,14 +45,14 @@
 #+CATEGORY: %s
 -----------------------\n")
 
-(defun sgu-format-function (format-string)
+(defun sgu-org2blog-format-function (format-string)
    (format format-string
            "ADDME"
            ""
 		   ""))
 
 ;;Enable wordpress's sourcecode shortcode blocks; Use 'wp backend to use
-(setq org2blog/wp-buffer-format-function 'sgu-format-function) 
+(setq org2blog/wp-buffer-format-function 'sgu-org2blog-format-function) 
 
 ;;a convenient function for inserting the blog template
 (defun sgu-wp-insert-template()

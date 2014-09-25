@@ -28,7 +28,6 @@
 ;; http://jblevins.org/projects/markdown-mode/
 
 ;;; Code:
-(provide 'creole-mode)
 (define-generic-mode 'wiki-mode 
   nil ; comments 
   nil; keywords 
@@ -51,4 +50,6 @@
   '(".wiki\\'"); auto-mode-alist
   '((lambda () (require 'info) (require 'goto-addr))); function-list
   "Wiki stuff including Creole Markup and BBCode.")
+
+(provide 'creole-mode)
 ;;; creole-mode.el ends here

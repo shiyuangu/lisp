@@ -26,12 +26,12 @@
 (add-to-list 'load-path "~/org-mode/lisp") ;;;CHANGEME to point to orgmode src
 (add-to-list 'load-path "~/org-mode/contrib/lisp" t) ;;add to the end of load-path
 (require 'htmlize)
-(require 'myess)
 (require 'ox-latex)
 (require 'ox-html)
 (require 'sgu-ox-html-english)
 ;;active Babel languages
 ;(package-initialize)
+(require 'myess) ;; for Babel
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((python . t)

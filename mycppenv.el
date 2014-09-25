@@ -18,7 +18,8 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-;;; Commentary:
+;;; Commentary: Use this in the hook
+;;; (add-hook 'c-mode-common-hook '(lambda() (require 'mycppenv) nil))
 
 ;; 
 
@@ -80,11 +81,12 @@
 (define-key gtags-mode-map (kbd "C-c r") 'gtags-find-rtag)
 (define-key gtags-mode-map (kbd "C-c p") 'gtags-pop-stack)
 (define-key gtags-select-mode-map (kbd "C-m") 'gtags-select-tag)
-(add-hook 'c-mode-common-hook '(lambda () (gtags-mode t)))
-
+;(add-hook 'c-mode-common-hook '(lambda () (gtags-mode t)))
+(gtags-mode t)
 ;;;;;;;;;;;;;;;;for doxymacs;;;;;;;;;;;;;;
 (require 'doxymacs)
-(add-hook 'c-mode-common-hook 'doxymacs-mode)
+;(add-hook 'c-mode-common-hook 'doxymacs-mode)
+(doxymacs-mode)
 ;; (defun my-doxymacs-font-lock-hook ()
 ;;       (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
 ;; 	  (doxymacs-font-lock)))
@@ -93,8 +95,8 @@
 
 ;;;;;;;;;;;;;;;;;for MOOSE ;;;;;;;;;;;;;;;;;
 ;;;;;;;moose.el should be load after auto-complete.el is loaded;;;;;
-(require 'moose)
-(setq moose-template-directory "~/moose_templates")
+;(require 'moose)
+;(setq moose-template-directory "~/moose_templates")
 
 ;;;;;for mpi;;;;;
 (require 'mpi)
