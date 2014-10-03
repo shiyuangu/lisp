@@ -24,9 +24,8 @@
 
 ;;; Code:
 
+
 (require 'browse-url)
-
-
 ;;;;;credit goes to dim-google.el
 (defun dim:google (keywords)
   "Form a google query URL and give it to browse-url"
@@ -57,7 +56,7 @@
 		(replace-string "]" "%5D" nil beg end))
 	  (message "Please define a region")))
 
-(global-set-key (kbd "C-c g") 'dim:google)
+(global-set-key (kbd "\e\eg") 'dim:google)
 (global-set-key (kbd "\e\el") 'goto-line)
 (global-set-key (kbd "\e\ew") 'sgu-wikilize-link)
 
@@ -68,7 +67,7 @@
 )
 
 ;;;;;;;;;swap C-j and C-m; by Gu;;;;;;;;;;;;;;;;;;;;
-(defun swap-cj-cm ()
+(defun sgu-swap-cj-cm ()
   (local-set-key (kbd "C-m") 'newline-and-indent)
   (local-set-key (kbd "C-j") 'newline))
 
