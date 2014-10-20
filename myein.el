@@ -18,7 +18,7 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-;;; Commentary:
+;;; Commentary: This file is  a refactor of zeroin.el in EIN; 
 
 ;; 
 
@@ -31,8 +31,25 @@
 (add-to-list 'load-path "/Users/shiyuang/.emacs.d/emacs-request")
 (require 'request)
 
-(add-to-list 'load-path "~/.emacs.d/emacs-ipython-notebook/lisp")
+;; change to point to ein source
+(defvar ein-root-dir "~/.emacs.d/emacs-ipython-notebook/")
+
+
+(add-to-list 'load-path (concat ein-root-dir "lisp"))
+(eval-when-compile (require 'ein-notebooklist))
 (require 'ein)
+
+;; setup auto-complete
+;; run `sudo git submodule update --init` regularly to update the dict
+(setq ein:use-auto-complete-superpack t)
+(unless (featurep 'auto-complete-config)
+  (require 'auto-complete-config)
+  (ac-config-default))
+(add-to-list 'ac-dictionary-files (concat ein-root-dir "lib/auto-complete/dict"))
+
+;; This is suggested in http://tkf.github.io/emacs-ipython-notebook/#jedi-el;;;
+;; Is it compatible with my personal setup myjedi.el? 
+(add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
 
 (provide 'myein)
 ;;; myein.el ends here

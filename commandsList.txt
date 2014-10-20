@@ -251,9 +251,12 @@ www.regular-expressions.info/reference.html
 
 ---------------------------
 for tikz/pgf;
-for the coordinate, the default unit length is 1cm;
-current page node is for absolute positions (look up "absolute poisitioning in pgf manual"). 
-
++ workflows for macports/texlive
+- `ports provides file` will shows the package provides the file. 'file' should be in absolute path. 
+- `ports contents {pgf package}|grep pdf` should show the pgf manual.
+- pgf manual's example is only a snippet, and the tikz libraried needed to produce the examples are ignored. In this case, search the pdf using appropriate phrases usually give the needed libraries. The libraries are listed at the end of the manual. 
++ for the coordinate, the default unit length is 1cm;
++ current page node is for absolute positions (look up "absolute poisitioning in pgf manual"). 
 ---------------------------
 for macports(in my macbook)
 configuration files are in /opt/local/etc/macports

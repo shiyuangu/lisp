@@ -22,6 +22,7 @@
 
 ;;  Prerequisite: auto-complete(from ELPA)
 ;;  TODO: integrate with Projectile: https://github.com/shiyuangu/jedi-starter.git
+;; NOTE: this may not be compatible with ein:jedi-setup. 
 
 ;;; Code:
 

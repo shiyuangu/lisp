@@ -25,13 +25,15 @@
 ;;; Code:
 
 (require 'python)
-;;;;;;;;;;;;;;;;;setup Jedi;;;;;;;;;;;;;;;;;
-;; (require 'myjedi)
-;; (add-hook 'python-mode-hook 'jedi:setup)
-;; (add-hook 'python-mode-hook 'jedi-config:setup-keys)
+
+;; my personal jedi setup. Is it compatible with ein:jedi-setup? 
+;; myjedi key setup shadows the ein:jedi-setup
+;(require 'myjedi)
+;(add-hook 'python-mode-hook 'jedi:setup)
+;(add-hook 'python-mode-hook 'jedi-config:setup-keys)
 
 ;;;;;;;;the following is taken from python.el by Fabian E. Gallina;;;;;
-;;;;; This completion uses ipython auto-completion feature provided by the module_completion("import scipy.") and get_ipython().completer.all_completions()
+;;;;; This completion uses ipython auto-completion feature provided by the module_completion("import scipy.") and get_ipython().completer.all_completions(); But the autocomplete only works in the python shell. 
 (setq
   python-shell-interpreter "ipython"
   python-shell-interpreter-args ""
