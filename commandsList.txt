@@ -372,6 +372,8 @@ QuickSynergy setup:
       On Mac:  Use Tab: enter the ip of the Ubuntu. The ip can be obtained by `ifconfig` in a terminal.
   ***). When the cursor doesn't move over the edge of the server, check the scroll lock key.  
 
+VBox: 
+  1). Copy-paste not working: rerun on client: /usr/bin/VBoxClient --clipboard
 
  Pygments:
  If install from macports, needs to manually create a symbolic link:
