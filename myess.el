@@ -18,7 +18,7 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-;;; Commentary:
+;;; Commentary: ESS can be installed by MacPorts, ELPA.  
 
 ;; 
 
@@ -27,7 +27,10 @@
 ;(require 'ess-site)
 
 (autoload 'R-mode "ess-site.el" "ESS" t)
+(autoload 'Stata-mode "ess-site.el" "ESS" t)
 (add-to-list 'auto-mode-alist '("\\.R$" . R-mode))
+(add-to-list 'auto-mode-alist '("\\.ado$" . Stata-mode))
+(add-to-list 'auto-mode-alist '("\\.do$" . Stata-mode))
 ;(setq inferior-R-program-name "/path/to/R") ;;R program name; default to "R"
 ;(setq ess-eval-visibly-p nil)
 ;(setq ess-ask-for-ess-directory nil)
