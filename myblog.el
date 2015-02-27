@@ -32,7 +32,7 @@
 (setq org2blog/wp-use-sourcecode-shortcode t)
 (setq org2blog/wp-blog-alist
       '(("wordpress"
-         :url "http://shiyuangu.wordpress.com/xmlrpc.php"
+         :url "https://shiyuangu.wordpress.com/xmlrpc.php"
          :username "shiyuangu"
          :default-title "ADDME"
          :default-categories ("default-sub" "default")

@@ -28,6 +28,7 @@
 (require 'htmlize)
 (require 'ox-latex)
 (require 'ox-html)
+(require 'ox-mediawiki)
 (require 'sgu-ox-html-english)
 ;;active Babel languages
 ;(package-initialize)
