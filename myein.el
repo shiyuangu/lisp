@@ -24,6 +24,12 @@
 
 ;;; Code:
 
+
+;;;;;;;;;;;;;;;;CAUTION;;;;;;;;;;;;;;;;;;;;
+;;;; Note that tkf repos doesn't work for 
+;;;;;ipython version after 2.0; please use
+;;;;; repos: https://github.com/millejoh/emacs-ipython-notebook instead
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;setup websocket; use git repos;this fixes some ein issues for ipython 2.x as in https://github.com/tkf/emacs-ipython-notebook/issues/146
 (add-to-list 'load-path "~/.emacs.d/emacs-websocket")
 (require 'websocket)
@@ -35,7 +41,25 @@
 (defvar ein-root-dir "~/.emacs.d/emacs-ipython-notebook/")
 
 
+;; (defvar zeroein:dependencies
+;;   '("nxhtml" "markdown-mode" "websocket" "request"
+;;     "auto-complete" "popup" "fuzzy" "pos-tip" "smartrep"))
+
+(defvar zeroein:dependencies
+  '("nxhtml" "markdown-mode" "popup" "fuzzy" "pos-tip" "smartrep"))
+
+;; ;; Loading the new python.el fails in Emacs 23.
+;; (when (>= emacs-major-version 24)
+;;   (add-to-list 'zeroein:dependencies "python"))
+
+;; ;;; `load-path' configurations
+
 (add-to-list 'load-path (concat ein-root-dir "lisp"))
+;(add-to-list 'load-path (concat ein-root-dir "lib/nxhtml/util"))
+(mapc (lambda (path) (add-to-list 'load-path (concat ein-root-dir "lib/" path)))
+      zeroein:dependencies)
+
+
 ;;; the following line is needed for commit 28a0c53 in repos git@github.com:millejoh/emacs-ipython-notebook.git
 (require 'ein-loaddefs)
 (eval-when-compile (require 'ein-notebooklist))
@@ -51,7 +75,7 @@
 
 ;; This is suggested in http://tkf.github.io/emacs-ipython-notebook/#jedi-el;;;
 ;; Is it compatible with my personal setup myjedi.el? 
-(add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
+;(add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
 
 (provide 'myein)
 ;;; myein.el ends here
