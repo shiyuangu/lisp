@@ -36,6 +36,8 @@
 
 
 (add-to-list 'load-path (concat ein-root-dir "lisp"))
+;;; the following line is needed for commit 28a0c53 in repos git@github.com:millejoh/emacs-ipython-notebook.git
+(require 'ein-loaddefs)
 (eval-when-compile (require 'ein-notebooklist))
 (require 'ein)
 
