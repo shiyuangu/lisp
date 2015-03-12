@@ -28,7 +28,7 @@
 (add-to-list 'load-path "~/.emacs.d/emacs-websocket")
 (require 'websocket)
 
-(add-to-list 'load-path "/Users/shiyuang/.emacs.d/emacs-request")
+(add-to-list 'load-path "~/.emacs.d/emacs-request")
 (require 'request)
 
 ;; change to point to ein source
