@@ -34,8 +34,8 @@
 (add-to-list 'load-path "~/.emacs.d/emacs-websocket")
 (require 'websocket)
 
-(add-to-list 'load-path "~/.emacs.d/emacs-request")
-(require 'request)
+;; (add-to-list 'load-path "~/.emacs.d/emacs-request")
+;; (require 'request)
 
 ;; change to point to ein source
 (defvar ein-root-dir "~/.emacs.d/emacs-ipython-notebook/")
@@ -46,7 +46,7 @@
 ;;     "auto-complete" "popup" "fuzzy" "pos-tip" "smartrep"))
 
 (defvar zeroein:dependencies
-  '("nxhtml" "markdown-mode" "popup" "fuzzy" "pos-tip" "smartrep"))
+  '("nxhtml" "markdown-mode" "request" "popup" "fuzzy" "pos-tip" "smartrep"))
 
 ;; ;; Loading the new python.el fails in Emacs 23.
 ;; (when (>= emacs-major-version 24)
