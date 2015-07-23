@@ -1,5 +1,4 @@
-;;; autoinsertx.el --- an extension of autoinsert by S. Gu
-
+;;; autoinsertx.el --- Wrapper of autoinsert with some specific setting
 ;; Copyright (C) 2013  S. Gu
 
 ;; Author: S. Gu <sgu@anl.gov>
@@ -23,10 +22,6 @@
 ;; 
 
 ;;; Code:
-
-
-
-(provide 'autoinsertx)
 
 (require 'autoinsert)
 (setq auto-insert t) ;;; mark region as modified if t
@@ -123,5 +118,6 @@
        >"System.out.println(\"End\");"> \n
        > "}" > \n
        > "}" > \n))
-  
+
+(provide 'autoinsertx)
 ;;; autoinsertx.el ends here
