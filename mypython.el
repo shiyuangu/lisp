@@ -70,7 +70,7 @@
 (setq jedi:complete-on-dot t)      ;optional; sgu: this redefines the key "."
 (setq jedi:use-shortcuts t) ;; enable the following shortcut M-. jedi:goto-definition; M-, jedi:goto-definition-pop-marker
 (setq jedi:server-args '("--log-traceback")) ; sgu: run: jedi:pop-to-epc-buffer to open the EPC traceback in EPC buffer. 
-
+(setq jedi:tooltip-method nil) ; use eldoc-style instead of popup-style
 (provide 'mypython)
 ;;; mypython.el ends here
 
