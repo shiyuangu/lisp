@@ -53,12 +53,23 @@
 (setq py-install-directory "/hom/sgu/python-mode")
 (add-to-list 'load-path py-install-directory)
 (require 'python-mode) ;use autoload instead http://emacswiki.org/emacs/ProgrammingWithPythonModeDotEl
-(setq py-shell-name "ipython")
+(setq py-shell-name "ipython")  ;; sgu:refer to py-switch-shell function in python-model.el
 (define-key python-mode-map (kbd "C-c C-x p") (lambda()(interactive) (py-execute-statement) (py-forward-statement)))
 (setq py-keep-windows-configuration t) ;; avoid messing up the layout after execution. 
 ;(autoload 'python-mode "python-mode" "Python Mode." t)
 ;(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
 ;(add-to-list 'interpreter-mode-alist '("python" . python-mode))
+
+;;; Set up Jedi 
+;;; To setup Emacs-Jedi, follows: 
+;;; https://github.com/tkf/emacs-jedi 
+;;; http://tkf.github.io/emacs-jedi/latest/
+;;; TODO: python-enviroment.el is a listed requirement, but has errors when installed through install-package which complains the deferred.el. As of 10/11/2015 Not set-up to use virtualenv yet. https://github.com/shiyuangu/jedi-starter suggests use (setq jedi-config:use-system-python t); however, jedi-config:use-system-python seems no longer in the code as of jedi.el version 0.2.5 and jedi-core.el version 0.2.5
+
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)      ;optional; sgu: this redefines the key "."
+(setq jedi:use-shortcuts t) ;; enable the following shortcut M-. jedi:goto-definition; M-, jedi:goto-definition-pop-marker
+(setq jedi:server-args '("--log-traceback")) ; sgu: run: jedi:pop-to-epc-buffer to open the EPC traceback in EPC buffer. 
 
 (provide 'mypython)
 ;;; mypython.el ends here

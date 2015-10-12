@@ -48,6 +48,6 @@
 (setq jedi:complete-on-dot t)                 ; optional
 
 ;;(add-hook 'python-mode-hook 'jedi:setup)
-;;(add-hook 'python-mode-hook 'jedi-config:setup-keys)
+;;(add-hook 'python-mode-hook 'jedi-config:setup-keys) ;;obsolete 
 (provide 'myjedi)
 ;;; myjedi.el ends here
