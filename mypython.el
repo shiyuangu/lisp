@@ -50,7 +50,7 @@
 ;; ;;;;setup ein;;;;;;
 ;; (require 'myein)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq py-install-directory "/hom/sgu/python-mode")
+(setq py-install-directory "/home/sgu/python-mode")
 (add-to-list 'load-path py-install-directory)
 (require 'python-mode) ;use autoload instead http://emacswiki.org/emacs/ProgrammingWithPythonModeDotEl
 (setq py-shell-name "ipython")  ;; sgu:refer to py-switch-shell function in python-model.el
@@ -66,12 +66,12 @@
 ;;; http://tkf.github.io/emacs-jedi/latest/
 ;;; TODO: python-enviroment.el is a listed requirement, but has errors when installed through install-package which complains the deferred.el. As of 10/11/2015 Not set-up to use virtualenv yet. https://github.com/shiyuangu/jedi-starter suggests use (setq jedi-config:use-system-python t); however, jedi-config:use-system-python seems no longer in the code as of jedi.el version 0.2.5 and jedi-core.el version 0.2.5
 
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)      ;optional; sgu: this redefines the key "."
-(setq jedi:use-shortcuts t) ;; enable the following shortcut M-. jedi:goto-definition; M-, jedi:goto-definition-pop-marker
-(setq jedi:server-args '("--log-traceback")) ; sgu: run: jedi:pop-to-epc-buffer to open the EPC traceback in EPC buffer. 
+;(add-hook 'python-mode-hook 'jedi:setup)
+;(setq jedi:complete-on-dot t)      ;optional; sgu: this redefines the key "."
+;(setq jedi:use-shortcuts t) ;; enable the following shortcut M-. jedi:goto-definition; M-, jedi:goto-definition-pop-marker
+;(setq jedi:server-args '("--log-traceback")) ; sgu: run: jedi:pop-to-epc-buffer to open the EPC traceback in EPC buffer. 
 ;(setq jedi:server-args '("--log-level" "DEBUG" "--log" "/home/sgu/tmp/jedi.log")) ;Turn on for debug; very slow!
-(setq jedi:tooltip-method nil) ; use eldoc-style instead of popup-style
+;(setq jedi:tooltip-method nil) ; use eldoc-style instead of popup-style
 (provide 'mypython)
 ;;; mypython.el ends here
 
