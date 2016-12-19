@@ -54,7 +54,12 @@
 (add-to-list 'load-path py-install-directory)
 (require 'python-mode) ;use autoload instead http://emacswiki.org/emacs/ProgrammingWithPythonModeDotEl
 (setq py-shell-name "ipython")  ;; sgu:refer to py-switch-shell function in python-model.el
+(defun cur_pos_sgu()
+  (interactive)
+  "print filename:line_no to clipboard"
+  (kill-new (message "%s:%d" (buffer-file-name) (count-lines 1 (point)))))
 (define-key python-mode-map (kbd "C-c C-x p") (lambda()(interactive) (py-execute-statement) (py-forward-statement)))
+(define-key python-mode-map (kbd "C-c C-x l") 'cur_pos_sgu)
 (setq py-keep-windows-configuration t) ;; avoid messing up the layout after execution. 
 ;(autoload 'python-mode "python-mode" "Python Mode." t)
 ;(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
