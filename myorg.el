@@ -23,8 +23,9 @@
 ;; 
 
 ;;; Code:
-(add-to-list 'load-path "~/org-mode/lisp") ;;;CHANGEME to point to orgmode src
-(add-to-list 'load-path "~/org-mode/contrib/lisp" t) ;;add to the end of load-path
+;;; uncomment the follow line to switch to version other than native 
+;;;(add-to-list 'load-path "~/org-mode/lisp") ;;;CHANGEME to point to orgmode src
+;;;(add-to-list 'load-path "~/org-mode/contrib/lisp" t) ;;add to the end of load-path
 (require 'htmlize)
 (require 'ox-latex)
 (require 'ox-html)
