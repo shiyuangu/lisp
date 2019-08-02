@@ -77,6 +77,33 @@
 ;(setq jedi:server-args '("--log-traceback")) ; sgu: run: jedi:pop-to-epc-buffer to open the EPC traceback in EPC buffer. 
 ;(setq jedi:server-args '("--log-level" "DEBUG" "--log" "/home/sgu/tmp/jedi.log")) ;Turn on for debug; very slow!
 ;(setq jedi:tooltip-method nil) ; use eldoc-style instead of popup-style
+
+;;;;other function
+(defun sgu-python-split-args (arg-string)
+  "Split a python argument string into ((name, default)..) tuples"
+  (let ((arg-string (replace-regexp-in-string "[[:blank:]\|\n]" "" arg-string)))
+  (mapcar (lambda (x)
+             (split-string x "[[:blank:]]*=[[:blank:]]*" t))
+          (split-string arg-string "[[:blank:]\|\n]*,[[:blank:]]*" t))))
+
+(defun sgu-python-to-kwargs (arg-string)
+   "Turn args to kwargs: \"a,b,c=1\" to \"a=a,b=b,c=c\"."
+   (interactive 
+      (if (use-region-p) 
+           (list (buffer-substring-no-properties (region-beginning) (region-end)))
+           (list (read-string "Enter the arg-string:"))))
+   (let* ((outputStr
+		   (mapconcat (lambda (x) (concat x " = " x ))
+					  (mapcar 'car (sgu-python-split-args arg-string)) ",")))
+        (if (use-region-p)
+            (save-excursion
+			  (let (($from (region-beginning))
+					($to (region-end)))
+				 (delete-region $from $to)
+				 (goto-char $from)
+				 (insert outputStr)))
+		  outputStr)))
+
 (provide 'mypython)
 ;;; mypython.el ends here
 
