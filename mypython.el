@@ -50,8 +50,11 @@
 ;; ;;;;setup ein;;;;;;
 ;; (require 'myein)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq py-install-directory "/home/sgu/python-mode")
-(add-to-list 'load-path py-install-directory)
+;; commented out to use python-mode elpa default setting. 
+;; (setq py-install-directory "/home/sgu/python-mode")
+; this py-install-directiory is only needed for completion and other environment stuff; needed to change if version changes: https://gitlab.com/python-mode-devs/python-mode/blob/master/README.org
+(setq py-install-directory "/home/sgu/.emacs.d/elpa/python-mode-20190912.1653")
+;; (add-to-list 'load-path py-install-directory)
 (require 'python-mode) ;use autoload instead http://emacswiki.org/emacs/ProgrammingWithPythonModeDotEl
 (setq py-shell-name "ipython")  ;; sgu:refer to py-switch-shell function in python-model.el
 (defun cur_pos_sgu()
