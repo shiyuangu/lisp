@@ -66,6 +66,21 @@
   (setq line-move-visual (not line-move-visual))
 )
 
+;; the following function is taken from 
+;;https://stackoverflow.com/questions/1587972/how-to-display-indentation-guides-in-emacs/4459159#4459159
+(defun sgu-toggle-fold ()
+  "Toggle fold all lines larger than indentation on current line.
+   This is intended for python-mode, yaml-mode which use spaces for
+   indentation"
+  (interactive)
+  (let ((col 1))
+    (save-excursion
+      (back-to-indentation)
+      (setq col (+ 1 (current-column)))
+      (set-selective-display
+       (if selective-display nil (or col 1))))))
+;;(global-set-key [(M C i)] 'sgu-toggle-fold) ;; this seems not working due to other mode often overwrote this key. 
+
 ;;;;;;;;;swap C-j and C-m; by Gu;;;;;;;;;;;;;;;;;;;;
 (defun sgu-swap-cj-cm ()
   (local-set-key (kbd "C-m") 'newline-and-indent)
