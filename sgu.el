@@ -25,40 +25,40 @@
 ;;; Code:
 
 
-(require 'browse-url)
-;;;;;credit goes to dim-google.el
-(defun dim:google (keywords)
-  "Form a google query URL and give it to browse-url"
-  (interactive 
-   (list
-    (if (use-region-p)
-	(buffer-substring (region-beginning) (region-end))
-      (read-string "Search google for: " (thing-at-point 'word)))))
+;; (require 'browse-url)
+;; ;;;;;credit goes to dim-google.el
+;; (defun dim:google (keywords)
+;;   "Form a google query URL and give it to browse-url"
+;;   (interactive 
+;;    (list
+;;     (if (use-region-p)
+;; 	(buffer-substring (region-beginning) (region-end))
+;;       (read-string "Search google for: " (thing-at-point 'word)))))
 
 
-  (browse-url 
-   (read-string "Browse google URL: " 
-		(concat "http://www.google.com/search?q=" 
-			(replace-regexp-in-string 
-			 "[[:space:]]+"
-			 "+"
-			 keywords)))))
-(defun sgu-wikilize-link (beg end)
-  "Url-encode wiki special characters [] {}"
-  (interactive (if (use-region-p)
-			       (list (region-beginning) (region-end))
-				   (list nil nil)))
-  (if (and beg end)
-	  (progn
-		(replace-string "{" "%7B" nil beg end)
-		(replace-string "}" "%7D" nil beg end)
-		(replace-string "[" "%5B" nil beg end)
-		(replace-string "]" "%5D" nil beg end))
-	  (message "Please define a region")))
+;;   (browse-url 
+;;    (read-string "Browse google URL: " 
+;; 		(concat "http://www.google.com/search?q=" 
+;; 			(replace-regexp-in-string 
+;; 			 "[[:space:]]+"
+;; 			 "+"
+;; 			 keywords)))))
+;; (defun sgu-wikilize-link (beg end)
+;;   "Url-encode wiki special characters [] {}"
+;;   (interactive (if (use-region-p)
+;; 			       (list (region-beginning) (region-end))
+;; 				   (list nil nil)))
+;;   (if (and beg end)
+;; 	  (progn
+;; 		(replace-string "{" "%7B" nil beg end)
+;; 		(replace-string "}" "%7D" nil beg end)
+;; 		(replace-string "[" "%5B" nil beg end)
+;; 		(replace-string "]" "%5D" nil beg end))
+;; 	  (message "Please define a region")))
 
-(global-set-key (kbd "\e\eg") 'dim:google)
-(global-set-key (kbd "\e\el") 'goto-line)
-(global-set-key (kbd "\e\ew") 'sgu-wikilize-link)
+;; (global-set-key (kbd "\e\eg") 'dim:google)
+;; (global-set-key (kbd "\e\el") 'goto-line)
+;  (global-set-key (kbd "\e\ew") 'sgu-wikilize-link)
 
 (defun sgu-toggle-visual-line ()
   (interactive)
