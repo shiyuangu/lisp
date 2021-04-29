@@ -79,7 +79,27 @@
       (setq col (+ 1 (current-column)))
       (set-selective-display
        (if selective-display nil (or col 1))))))
-;;(global-set-key [(M C i)] 'sgu-toggle-fold) ;; this seems not working due to other mode often overwrote this key. 
+;;(global-set-key [(M C i)] 'sgu-toggle-fold) ;; this seems not working due to other mode often overwrote this key.
+
+;;
+(defun sgu-org-insert-img-from-clipboard ()
+"create an png image from the clipboard(MacOS) and insert the link. Make sure the sgu-paste-img is executable and is in PATH 
+The image will be displayed immediately once inserted. 
+We can toggle the display of images by org-toggle-inline-images 
+We can also open the image link externally via C-u C-u C-c C-o (org-open-at-point)
+Cf: https://www.reddit.com/r/emacs/comments/8wikaj/paste_image_from_clipboard_on_both_mac_pc"
+	  (interactive)
+	  (setq sgu/org-insert-folder-path (concat default-directory "img/")) ;make the img directory
+	  (if (not (file-exists-p sgu/org-insert-folder-path))
+		  (mkdir sgu/org-insert-folder-path)) ;create the directory if it doesn't exist
+	  (let* ((img-file (format-time-string "%Y%m%d-%H.%M.%S"))
+			 (img-file-abs (concat sgu/org-insert-folder-path img-file)) 
+			 (exit-status
+			  (call-process "sgu-paste-img" nil nil nil img-file-abs)))
+	   (if (and (integerp exit-status) (= 0 exit-status))
+		   (progn (org-insert-link nil (concat "file:" "img/" img-file ".png") "")
+				  (org-display-inline-images))
+		   (message "sgu-paste-img is unsuccessful to paste to  %s" img-file-abs))))
 
 ;;;;;;;;;swap C-j and C-m; by Gu;;;;;;;;;;;;;;;;;;;;
 (defun sgu-swap-cj-cm ()
