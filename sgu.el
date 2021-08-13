@@ -97,9 +97,13 @@ Cf: https://www.reddit.com/r/emacs/comments/8wikaj/paste_image_from_clipboard_on
 			 (exit-status
 			  (call-process "sgu-paste-img" nil nil nil img-file-abs)))
 	   (if (and (integerp exit-status) (= 0 exit-status))
-		   (progn (org-insert-link nil (concat "file:" "img/" img-file ".png") "")
-				  (org-display-inline-images))
-		   (message "sgu-paste-img is unsuccessful to paste to  %s" img-file-abs))))
+		   (org-insert-link nil (concat "file:" "img/" img-file ".png") "")
+		 (message "sgu-paste-img is unsuccessful to paste to  %s" img-file-abs))))
+
+(defun sgu-buffer-fileline-at-point()
+  (interactive)
+  "print filename:line_no to clipboard"
+  (kill-new (message "%s:%d" (buffer-file-name) (count-lines 1 (point)))))
 
 ;;;;;;;;;swap C-j and C-m; by Gu;;;;;;;;;;;;;;;;;;;;
 (defun sgu-swap-cj-cm ()
