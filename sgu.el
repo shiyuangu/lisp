@@ -110,5 +110,24 @@ Cf: https://www.reddit.com/r/emacs/comments/8wikaj/paste_image_from_clipboard_on
   (local-set-key (kbd "C-m") 'newline-and-indent)
   (local-set-key (kbd "C-j") 'newline))
 
+(defun sgu/send-line-or-region-terminal ()
+"Send line or region to the buffer named *terminal* and then send the carriage return
+If the buffer is in terminal mode and its input mode is line, then this command simply 
+send and execute. 
+Cf: https://emacs.stackexchange.com/questions/24190/send-orgmode-sh-babel-block-to-eshell-term-in-emacs"
+(interactive)
+(if (use-region-p) 
+  (append-to-buffer (get-buffer "*terminal*") (mark)(point))
+  (let (p1 p2)
+    (setq p1 (line-beginning-position))
+    (setq p2 (line-end-position))
+    (append-to-buffer (get-buffer "*terminal*") p1 p2)
+  ))
+  (let (b)
+    (setq b (get-buffer (current-buffer)))
+    (switch-to-buffer-other-window (get-buffer "*terminal*"))
+    (execute-kbd-macro "\C-m")
+    (switch-to-buffer-other-window b)))
+
 (provide 'sgu)
 ;;; sgu.el ends here
