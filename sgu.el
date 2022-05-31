@@ -129,5 +129,10 @@ Cf: https://emacs.stackexchange.com/questions/24190/send-orgmode-sh-babel-block-
     (execute-kbd-macro "\C-m")
     (switch-to-buffer-other-window b)))
 
+(defun sgu/new-scratch-buffer-in-org-mode ()
+  (interactive)
+  (switch-to-buffer (generate-new-buffer-name "*temp*"))
+  (org-mode))
+
 (provide 'sgu)
 ;;; sgu.el ends here
