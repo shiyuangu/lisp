@@ -142,12 +142,12 @@ Cf: https://emacs.stackexchange.com/questions/24190/send-orgmode-sh-babel-block-
     (let ((text (delete-and-extract-region start end)))
       (insert (funcall func text)))))
 
-(defun sgu-hex-region (start end)
+(defun sgu-url-encode-region (start end)
   "urlencode the region between START and END in current buffer."
   (interactive "r")
   (sgu-func-region start end #'url-hexify-string))
 
-(defun sgu-unhex-region (start end)
+(defun sgu-url-decode-region (start end)
   "de-urlencode the region between START and END in current buffer."
   (interactive "r")
   (sgu-func-region start end #'url-unhex-string))
