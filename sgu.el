@@ -134,5 +134,25 @@ Cf: https://emacs.stackexchange.com/questions/24190/send-orgmode-sh-babel-block-
   (switch-to-buffer (generate-new-buffer-name "*temp*"))
   (org-mode))
 
+;;;;;;;; begin: url processing helpers
+;; Cf: https://stackoverflow.com/questions/611831/how-can-i-url-decode-a-string-in-emacs-lisp
+(defun sgu-func-region (start end func)
+  "run a function over the region between START and END in current buffer."
+  (save-excursion
+    (let ((text (delete-and-extract-region start end)))
+      (insert (funcall func text)))))
+
+(defun sgu-hex-region (start end)
+  "urlencode the region between START and END in current buffer."
+  (interactive "r")
+  (sgu-func-region start end #'url-hexify-string))
+
+(defun sgu-unhex-region (start end)
+  "de-urlencode the region between START and END in current buffer."
+  (interactive "r")
+  (sgu-func-region start end #'url-unhex-string))
+
+;;;;;;;; end: url processing helpers 
+
 (provide 'sgu)
 ;;; sgu.el ends here
